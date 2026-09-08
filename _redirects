@@ -1,5 +1,8 @@
-# Empeche le site public statique de servir le code source de l'app admin
-# (deployee separement) et les fichiers SQL/Edge Functions internes.
-/admin/*      /   404!
+# /admin/* est proxifie (edge) vers l'app admin, deployee separement sur
+# oracle-admin-panel.netlify.app. La regle force (!) empeche Netlify de
+# servir a la place le code source brut de admin/ present dans ce depot
+# (le site principal n'a pas d'etape de build et publie tout le repo).
+/admin/*      https://oracle-admin-panel.netlify.app/admin/:splat   200!
+
+# Empeche le site public statique de servir les fichiers SQL/Edge Functions internes.
 /supabase/*   /   404!
-/admin        /   404!

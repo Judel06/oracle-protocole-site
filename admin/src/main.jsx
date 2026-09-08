@@ -8,7 +8,7 @@ import { ToastProvider } from './context/ToastContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/admin">
       <ToastProvider>
         <AuthProvider>
           <App />
