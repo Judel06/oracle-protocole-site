@@ -320,6 +320,15 @@ section[data-theme="alt"] { background: var(--cream-2); }
   background: repeating-linear-gradient(135deg, var(--navy-2), var(--navy-2) 12px, var(--navy) 12px, var(--navy) 24px);
   border-color: var(--gold);
 }
+/* Photo reelle dans un emplacement placeholder : herite de l'aspect-ratio/rayon via les
+   memes classes (wide/square/circle/etc.), sans le style pointille/raye du placeholder. */
+img.placeholder-img {
+  object-fit: cover;
+  border: none;
+  background: none;
+  padding: 0;
+  min-height: 0;
+}
 .placeholder-img.dark span { background: rgba(52,16,27,.85); color: var(--gold-light); }
 .placeholder-img.circle { border-radius: 50%; aspect-ratio: 1/1; min-height: 0; }
 .placeholder-img.wide { aspect-ratio: 16/10; }
