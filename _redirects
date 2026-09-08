@@ -2,7 +2,15 @@
 # oracle-admin-panel.netlify.app. La regle force (!) empeche Netlify de
 # servir a la place le code source brut de admin/ present dans ce depot
 # (le site principal n'a pas d'etape de build et publie tout le repo).
-/admin/*      https://oracle-admin-panel.netlify.app/admin/:splat   200!
+/admin/*             https://oracle-admin-panel.netlify.app/admin/:splat               200!
+
+# /dossierscomplets/* est proxifie (edge) vers le grand formulaire de recrutement,
+# deploye separement sur oracle-recrutement.netlify.app. Meme principe que /admin.
+/dossierscomplets/*  https://oracle-recrutement.netlify.app/dossierscomplets/:splat     200!
+
+# Empeche le site public statique de servir le code source brut de recrutement/
+# (deploye separement, sinon accessible sans build via le depot du site principal).
+/recrutement/*        /   404!
 
 # Empeche le site public statique de servir les fichiers SQL/Edge Functions internes.
 /supabase/*   /   404!
