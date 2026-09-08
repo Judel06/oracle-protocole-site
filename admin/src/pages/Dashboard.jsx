@@ -8,8 +8,42 @@ import PresenceModule from '../components/PresenceModule';
 import ApprovalModule from '../components/ApprovalModule';
 import { ENTITIES, STATUT_LABELS } from '../config/entities';
 import { formatRelative } from '../utils/format';
+import { useToast } from '../context/ToastContext';
 
 const THIRTY_DAYS_AGO = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+const DOSSIER_COMPLET_URL = 'https://oracleprotocole.com/dossierscomplets';
+
+function ShareDossierLink() {
+  const { showToast } = useToast();
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(DOSSIER_COMPLET_URL);
+      showToast('Lien copié dans le presse-papiers.');
+    } catch {
+      showToast('Impossible de copier automatiquement — sélectionnez et copiez le lien manuellement.', 'error');
+    }
+  };
+
+  return (
+    <div className="card card-pad" style={{ marginBottom: 24 }}>
+      <div className="section-title">Lien du dossier de candidature complet</div>
+      <p className="field-hint" style={{ marginTop: -6, marginBottom: 14 }}>
+        Réservé à l'équipe ORACLE — à transmettre directement (email, WhatsApp…) aux candidats invités à compléter le grand dossier en 22 étapes. Ce lien n'apparaît nulle part sur le site public.
+      </p>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        <input
+          type="text"
+          readOnly
+          value={DOSSIER_COMPLET_URL}
+          onFocus={(e) => e.target.select()}
+          style={{ flex: '1 1 320px', padding: 10, border: '1.5px solid var(--border)', borderRadius: 8, fontFamily: 'monospace', fontSize: '.86rem', color: 'var(--text-soft)', background: 'var(--bg)' }}
+        />
+        <button className="btn btn-primary" onClick={handleCopy}>Copier le lien</button>
+      </div>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -95,6 +129,8 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+
+        <ShareDossierLink />
 
         <div className="modules-grid">
           <PresenceModule />
