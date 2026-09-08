@@ -6,6 +6,9 @@ import Dashboard from './pages/Dashboard';
 import EntityList from './pages/EntityList';
 import EntityDetail from './pages/EntityDetail';
 import Members from './pages/Members';
+import Candidatures from './pages/Candidatures';
+import CandidatureDetail from './pages/CandidatureDetail';
+import MissionMatchTool from './pages/MissionMatchTool';
 import Users from './pages/Users';
 import Settings from './pages/Settings';
 import ActivityLog from './pages/ActivityLog';
@@ -34,6 +37,9 @@ export default function App() {
         <Route path="/messages" element={<EntityList entityKey="messages" />} />
         <Route path="/messages/:id" element={<EntityDetail entityKey="messages" />} />
         <Route path="/membres" element={<Members />} />
+        <Route path="/candidatures" element={<Candidatures />} />
+        <Route path="/candidatures/recherche-mission" element={<MissionMatchTool />} />
+        <Route path="/candidatures/:id" element={<CandidatureDetail />} />
         <Route path="/utilisateurs" element={<Users />} />
         <Route path="/parametres" element={<Settings />} />
         <Route path="/journal" element={<ActivityLog />} />
