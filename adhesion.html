@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adhésion — ORACLE Protocole et Services</title>
+<meta name="description" content="Rejoignez l'équipe du protocole d'ORACLE. Déposez votre candidature pour intégrer notre équipe de protocole officiel et de gestion cérémonielle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="adhesion">
+
+<!-- ===== HEADER ===== -->
+<header class="site-header no-hero" id="siteHeader" data-hero="false">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">O</span>
+      <span class="logo-text">ORACLE<small>Protocole &amp; Services</small></span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="index.html" class="nav-link" data-nav="accueil">Accueil</a></li>
+        <li><a href="a-propos.html" class="nav-link" data-nav="apropos">À Propos</a></li>
+        <li><a href="services.html" class="nav-link" data-nav="services">Nos Services</a></li>
+        <li><a href="portfolio.html" class="nav-link" data-nav="portfolio">Réalisations</a></li>
+        <li><a href="contact.html" class="nav-link" data-nav="contact">Contact</a></li>
+        <li class="nav-cta-mobile"><a href="adhesion.html" class="btn btn-outline btn-sm">Adhésion</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Sélecteur de langue">
+        <button class="lang-btn active" data-lang="fr" type="button">FR</button>
+        <button class="lang-btn" data-lang="en" type="button" disabled title="Bientôt disponible">EN</button>
+        <button class="lang-btn" data-lang="ht" type="button" disabled title="Bientôt disponible">HT</button>
+      </div>
+      <a href="adhesion.html" class="btn btn-outline btn-sm">Adhésion</a>
+      <a href="contact.html" class="btn btn-gold btn-sm">Demander un devis</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="index.html">Accueil</a> / Adhésion</p>
+    <h1>Rejoignez l'équipe du protocole d'ORACLE</h1>
+    <p>ORACLE ouvre un appel à candidatures pour intégrer son équipe de protocole officiel et de gestion cérémonielle. Si vous partagez notre exigence de rigueur, d'élégance et de service, déposez votre candidature ci-dessous — notre équipe l'examinera avec attention.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:820px; margin:0 auto;">
+
+    <div class="reveal" style="margin-bottom:32px; text-align:center;">
+      <span class="eyebrow">Appel à candidatures</span>
+      <h2 style="font-size:1.7rem;">Formulaire de candidature</h2>
+      <p style="color:var(--ink-soft);">Les champs marqués d'un <span class="required">*</span> sont obligatoires. Comptez environ 10 minutes pour compléter votre dossier.</p>
+    </div>
+
+    <div class="form-card reveal">
+      <div class="form-status" id="adhesionFormStatus" role="status" aria-live="polite"></div>
+
+      <form id="adhesionForm" novalidate>
+        <input type="text" name="site_web" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="adh-nom">Nom complet <span class="required">*</span></label>
+            <input type="text" id="adh-nom" name="nom_complet" required autocomplete="name">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="adh-naissance">Date de naissance</label>
+            <input type="date" id="adh-naissance" name="date_naissance">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="adh-email">Email <span class="required">*</span></label>
+            <input type="email" id="adh-email" name="email" required autocomplete="email">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="adh-telephone">Téléphone <span class="required">*</span></label>
+            <input type="tel" id="adh-telephone" name="telephone" required autocomplete="tel">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="adh-ville">Ville de résidence</label>
+          <input type="text" id="adh-ville" name="ville" autocomplete="address-level2">
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="adh-formation">Formation / parcours académique</label>
+          <textarea id="adh-formation" name="formation" placeholder="Diplômes, établissements, domaines d'étude…"></textarea>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="adh-experience">Expérience pertinente</label>
+          <textarea id="adh-experience" name="experience_pertinente" placeholder="Protocole, événementiel, diplomatie, relations publiques, encadrement…"></textarea>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field">
+          <label>Langues parlées</label>
+          <div class="checkbox-group" id="adh-langues-group">
+            <label class="checkbox-option"><input type="checkbox" name="langues" value="Français"> Français</label>
+            <label class="checkbox-option"><input type="checkbox" name="langues" value="Créole"> Créole</label>
+            <label class="checkbox-option"><input type="checkbox" name="langues" value="Anglais"> Anglais</label>
+            <label class="checkbox-option"><input type="checkbox" name="langues" value="Espagnol"> Espagnol</label>
+            <label class="checkbox-option"><input type="checkbox" name="langues" value="Autre" id="adh-langue-autre"> Autre</label>
+          </div>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field" id="adh-langue-autre-wrap" style="display:none;">
+          <label for="adh-langue-autre-precision">Précisez la ou les autre(s) langue(s)</label>
+          <input type="text" id="adh-langue-autre-precision" name="langue_autre_precision">
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="adh-domaine">Domaine d'intérêt <span class="required">*</span></label>
+            <select id="adh-domaine" name="domaine_interet" required>
+              <option value="">Sélectionner…</option>
+              <option value="Protocole Officiel &amp; Diplomatique">Protocole Officiel &amp; Diplomatique</option>
+              <option value="Étiquette &amp; Formation">Étiquette &amp; Formation</option>
+              <option value="Gestion Cérémonielle d'Événements">Gestion Cérémonielle d'Événements</option>
+              <option value="Conseil &amp; Ingénierie Protocolaire">Conseil &amp; Ingénierie Protocolaire</option>
+              <option value="Image de Marque &amp; Identité Visuelle">Image de Marque &amp; Identité Visuelle</option>
+            </select>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label>Disponibilité <span class="required">*</span></label>
+            <div class="radio-group" id="adh-disponibilite-group">
+              <label class="radio-option"><input type="radio" name="disponibilite" value="temps_plein" required> Temps plein</label>
+              <label class="radio-option"><input type="radio" name="disponibilite" value="temps_partiel"> Temps partiel</label>
+              <label class="radio-option"><input type="radio" name="disponibilite" value="ponctuel"> Ponctuel (selon événements)</label>
+            </div>
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="adh-motivation">Lettre de motivation</label>
+          <textarea id="adh-motivation" name="lettre_motivation" placeholder="Pourquoi souhaitez-vous rejoindre l'équipe du protocole d'ORACLE ?"></textarea>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="adh-cv">CV (PDF)</label>
+            <input type="file" id="adh-cv" name="cv" accept=".pdf,application/pdf">
+            <p class="field-hint" style="margin-bottom:0;">Format PDF uniquement, 10 Mo max.</p>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="adh-photo">Photo d'identité</label>
+            <input type="file" id="adh-photo" name="photo" accept=".jpg,.jpeg,.png,image/jpeg,image/png">
+            <p class="field-hint" style="margin-bottom:0;">JPG ou PNG, 10 Mo max.</p>
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="checkbox-option" style="width:100%;">
+            <input type="checkbox" id="adh-accepte-conditions" name="accepte_conditions" required>
+            J'accepte que mes données et documents transmis soient traités par ORACLE Protocoles et Services dans le cadre de l'examen de ma candidature. <span class="required">*</span>
+          </label>
+          <p class="field-error"></p>
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-block">Soumettre ma candidature</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span class="logo-mark">O</span><span class="logo-text">ORACLE</span></div>
+      <p>Service de Protocole et de Gestion Cérémonielle d'ADIS-HAITI.</p>
+      <p class="footer-ecosystem">Membre de l'écosystème <a href="#">ADIS-HAITI</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html" data-nav="accueil">Accueil</a></li>
+        <li><a href="a-propos.html" data-nav="apropos">À Propos</a></li>
+        <li><a href="services.html" data-nav="services">Nos Services</a></li>
+        <li><a href="portfolio.html" data-nav="portfolio">Réalisations</a></li>
+        <li><a href="contact.html" data-nav="contact">Contact</a></li>
+        <li><a href="adhesion.html" data-nav="adhesion">Adhésion</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html#protocole-officiel">Protocole Officiel</a></li>
+        <li><a href="services.html#etiquette-formation">Étiquette &amp; Formation</a></li>
+        <li><a href="services.html#gestion-ceremonielle">Gestion Cérémonielle</a></li>
+        <li><a href="services.html#conseil-ingenierie">Conseil &amp; Ingénierie</a></li>
+        <li><a href="services.html#image-identite">Image de Marque</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li data-site-address>Port-au-Prince, Haïti</li>
+        <li data-site-phone>+509 4245-4545</li>
+        <li data-site-email>admin@oracleprotocole.com</li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 ORACLE — Protocoles et Services. Tous droits réservés.</p>
+    <p><a href="#">Mentions légales</a></p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/site-settings.js"></script>
+<script src="js/forms.js"></script>
+<script src="js/adhesion-form.js"></script>
+</body>
+</html>

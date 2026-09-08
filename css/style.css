@@ -131,6 +131,7 @@ section[data-theme="alt"] { background: var(--cream-2); }
 .btn-outline-dark:hover { background: var(--navy); color: var(--white); }
 .btn-block { width: 100%; justify-content: center; }
 .btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.nav-cta-mobile { display: none; }
 
 /* ===== Header ===== */
 .site-header {
@@ -745,6 +746,7 @@ img.placeholder-img {
   .nav-toggle { display: flex; }
   .header-actions .btn-sm { display: none; }
   .lang-switch { display: none; }
+  .nav-cta-mobile { display: block; margin-top: 6px; }
   .form-row { grid-template-columns: 1fr; }
 }
 
