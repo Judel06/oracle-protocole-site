@@ -233,7 +233,27 @@ section[data-theme="alt"] { background: var(--cream-2); }
     linear-gradient(100deg, rgba(24,7,12,.75) 0%, rgba(24,7,12,.35) 42%, rgba(24,7,12,.15) 65%);
 }
 
-.hero-content { max-width: 660px; padding-bottom: 12vh; }
+/* Hero d'accueil — collage de bandes photo + mot en filigrane dore */
+.hero-strip-grid { position: absolute; inset: 0; z-index: -2; display: flex; flex-direction: column; gap: 3px; background: var(--navy); }
+.hero-strip { flex: 1; overflow: hidden; }
+.hero-strip img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; filter: saturate(.6) brightness(.72); }
+.hero-overlay {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(0deg, rgba(24,7,12,.96) 0%, rgba(24,7,12,.68) 36%, rgba(24,7,12,.38) 60%, rgba(24,7,12,.6) 100%),
+    linear-gradient(100deg, rgba(24,7,12,.92) 0%, rgba(24,7,12,.5) 45%, rgba(24,7,12,.18) 72%);
+}
+.hero-watermark {
+  position: absolute; left: 0; right: 0; top: 44%; transform: translateY(-50%);
+  font-family: var(--font-ui); font-weight: 800; text-transform: uppercase;
+  font-size: clamp(4.2rem, 15vw, 12rem); letter-spacing: -.02em; line-height: .85;
+  text-align: center; white-space: nowrap;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  opacity: .3; pointer-events: none; z-index: 0; user-select: none;
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 660px; padding-bottom: 12vh; }
 .hero-content .eyebrow { color: var(--gold-light); }
 .hero-content h1 {
   color: var(--white);
