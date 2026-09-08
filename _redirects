@@ -1,4 +1,5 @@
 # Empeche le site public statique de servir le code source de l'app admin
 # (deployee separement) et les fichiers SQL/Edge Functions internes.
-/admin/*      /   404
-/supabase/*   /   404
+/admin/*      /   404!
+/supabase/*   /   404!
+/admin        /   404!
