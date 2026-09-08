@@ -5,6 +5,7 @@ import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import EntityList from './pages/EntityList';
 import EntityDetail from './pages/EntityDetail';
+import Members from './pages/Members';
 import Users from './pages/Users';
 import Settings from './pages/Settings';
 import ActivityLog from './pages/ActivityLog';
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/formations/:id" element={<EntityDetail entityKey="formations" />} />
         <Route path="/messages" element={<EntityList entityKey="messages" />} />
         <Route path="/messages/:id" element={<EntityDetail entityKey="messages" />} />
+        <Route path="/membres" element={<Members />} />
         <Route path="/utilisateurs" element={<Users />} />
         <Route path="/parametres" element={<Settings />} />
         <Route path="/journal" element={<ActivityLog />} />

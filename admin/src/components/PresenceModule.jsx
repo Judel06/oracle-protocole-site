@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { useToast } from '../context/ToastContext';
 import { logActivity } from '../utils/logActivity';
@@ -9,32 +10,44 @@ const NIVEAU_LABELS = {
   niveau_3: 'Niveau 3 – Zone Générale',
 };
 
+const EMPTY_ADHOC = { nom_complet: '', niveau_accreditation: 'niveau_2', affectation: '' };
+
 /**
  * Module "Confirmation de presence" du dashboard : liste des membres du
  * protocole affectes a l'evenement actif, avec confirmation d'arrivee.
- * L'envoi de l'email de notification est gere cote base (trigger Postgres
- * sur presence_protocole -> Edge Function notify-presence) : ce composant
- * n'a rien a faire de plus qu'ecrire le changement de statut.
+ * L'ajout se fait soit depuis l'annuaire permanent (membres_protocole,
+ * page /membres), soit ponctuellement ("hors annuaire") pour du staff
+ * non recurrent. L'envoi de l'email de notification est gere cote base
+ * (trigger Postgres sur presence_protocole -> Edge Function notify-presence).
  */
 export default function PresenceModule() {
   const { showToast } = useToast();
   const [evenement, setEvenement] = useState(null);
   const [members, setMembers] = useState([]);
+  const [roster, setRoster] = useState([]);
   const [loading, setLoading] = useState(true);
   const [confirmingId, setConfirmingId] = useState(null);
   const [lieuInput, setLieuInput] = useState('');
   const [savingId, setSavingId] = useState(null);
   const [justUpdatedId, setJustUpdatedId] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [addMode, setAddMode] = useState('roster');
   const [showEventForm, setShowEventForm] = useState(false);
-  const [newMember, setNewMember] = useState({ nom_complet: '', niveau_accreditation: 'niveau_2', affectation: '' });
+  const [selectedRosterId, setSelectedRosterId] = useState('');
+  const [rosterNiveau, setRosterNiveau] = useState('niveau_2');
+  const [rosterAffectation, setRosterAffectation] = useState('');
+  const [adhoc, setAdhoc] = useState(EMPTY_ADHOC);
   const [newEvent, setNewEvent] = useState({ nom: '', date_evenement: '', lieu: '' });
   const [saving, setSaving] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
-    const { data: evt } = await supabase.from('evenements').select('*').eq('actif', true).maybeSingle();
+    const [{ data: evt }, { data: rosterData }] = await Promise.all([
+      supabase.from('evenements').select('*').eq('actif', true).maybeSingle(),
+      supabase.from('membres_protocole').select('*').eq('statut', 'actif').order('nom_complet', { ascending: true }),
+    ]);
     setEvenement(evt || null);
+    setRoster(rosterData || []);
 
     if (evt) {
       const { data: rows } = await supabase
@@ -55,6 +68,8 @@ export default function PresenceModule() {
   const totalCount = members.length;
   const progressPct = totalCount ? Math.round((presentCount / totalCount) * 100) : 0;
 
+  const availableRoster = roster.filter((r) => !members.some((m) => m.membre_id === r.id));
+
   const handleCreateEvent = async (e) => {
     e.preventDefault();
     if (!newEvent.nom.trim()) return;
@@ -74,19 +89,47 @@ export default function PresenceModule() {
     load();
   };
 
-  const handleAddMember = async (e) => {
+  const handlePickRosterMember = (id) => {
+    setSelectedRosterId(id);
+    const m = roster.find((r) => r.id === id);
+    setRosterNiveau(m?.niveau_accreditation || 'niveau_2');
+    setRosterAffectation(m?.affectation_defaut || '');
+  };
+
+  const handleAddFromRoster = async (e) => {
     e.preventDefault();
-    if (!newMember.nom_complet.trim() || !newMember.affectation.trim() || !evenement) return;
+    if (!selectedRosterId || !evenement) return;
+    const rosterMember = roster.find((r) => r.id === selectedRosterId);
     setSaving(true);
     const { error } = await supabase.from('presence_protocole').insert({
       evenement_id: evenement.id,
-      nom_complet: newMember.nom_complet.trim(),
-      niveau_accreditation: newMember.niveau_accreditation,
-      affectation: newMember.affectation.trim(),
+      membre_id: rosterMember.id,
+      nom_complet: rosterMember.nom_complet,
+      niveau_accreditation: rosterNiveau,
+      affectation: rosterAffectation.trim() || rosterMember.affectation_defaut || 'Non précisé',
     });
     setSaving(false);
     if (error) { showToast("L'ajout du membre a échoué.", 'error'); return; }
-    setNewMember({ nom_complet: '', niveau_accreditation: 'niveau_2', affectation: '' });
+    setSelectedRosterId('');
+    setRosterAffectation('');
+    setShowAddForm(false);
+    showToast(`${rosterMember.nom_complet} ajouté à l'événement.`);
+    load();
+  };
+
+  const handleAddAdhoc = async (e) => {
+    e.preventDefault();
+    if (!adhoc.nom_complet.trim() || !adhoc.affectation.trim() || !evenement) return;
+    setSaving(true);
+    const { error } = await supabase.from('presence_protocole').insert({
+      evenement_id: evenement.id,
+      nom_complet: adhoc.nom_complet.trim(),
+      niveau_accreditation: adhoc.niveau_accreditation,
+      affectation: adhoc.affectation.trim(),
+    });
+    setSaving(false);
+    if (error) { showToast("L'ajout du membre a échoué.", 'error'); return; }
+    setAdhoc(EMPTY_ADHOC);
     setShowAddForm(false);
     showToast('Membre ajouté à la liste.');
     load();
@@ -139,14 +182,46 @@ export default function PresenceModule() {
           </div>
 
           {showAddForm && (
-            <form className="inline-form" onSubmit={handleAddMember}>
-              <input type="text" placeholder="Nom complet" required value={newMember.nom_complet} onChange={(e) => setNewMember((p) => ({ ...p, nom_complet: e.target.value }))} />
-              <select value={newMember.niveau_accreditation} onChange={(e) => setNewMember((p) => ({ ...p, niveau_accreditation: e.target.value }))}>
-                {Object.entries(NIVEAU_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-              </select>
-              <input type="text" placeholder="Affectation (ex. Accueil VIP)" required value={newMember.affectation} onChange={(e) => setNewMember((p) => ({ ...p, affectation: e.target.value }))} />
-              <button type="submit" className="btn btn-primary btn-sm" disabled={saving}>Ajouter</button>
-            </form>
+            <div style={{ marginBottom: 16 }}>
+              <div className="add-mode-tabs">
+                <button type="button" className={`tab-btn ${addMode === 'roster' ? 'active' : ''}`} onClick={() => setAddMode('roster')}>Depuis l'annuaire</button>
+                <button type="button" className={`tab-btn ${addMode === 'adhoc' ? 'active' : ''}`} onClick={() => setAddMode('adhoc')}>Hors annuaire</button>
+              </div>
+
+              {addMode === 'roster' ? (
+                availableRoster.length === 0 ? (
+                  <p className="field-hint">
+                    Tous les membres actifs sont déjà sur cette liste, ou aucun membre actif.{' '}
+                    <Link to="/membres">Gérer l'annuaire →</Link>
+                  </p>
+                ) : (
+                  <form className="inline-form" onSubmit={handleAddFromRoster}>
+                    <select required value={selectedRosterId} onChange={(e) => handlePickRosterMember(e.target.value)}>
+                      <option value="">Choisir un membre…</option>
+                      {availableRoster.map((r) => <option key={r.id} value={r.id}>{r.nom_complet}</option>)}
+                    </select>
+                    {selectedRosterId && (
+                      <>
+                        <select value={rosterNiveau} onChange={(e) => setRosterNiveau(e.target.value)}>
+                          {Object.entries(NIVEAU_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                        </select>
+                        <input type="text" placeholder="Affectation pour cet événement" value={rosterAffectation} onChange={(e) => setRosterAffectation(e.target.value)} />
+                      </>
+                    )}
+                    <button type="submit" className="btn btn-primary btn-sm" disabled={saving || !selectedRosterId}>Ajouter</button>
+                  </form>
+                )
+              ) : (
+                <form className="inline-form" onSubmit={handleAddAdhoc}>
+                  <input type="text" placeholder="Nom complet" required value={adhoc.nom_complet} onChange={(e) => setAdhoc((p) => ({ ...p, nom_complet: e.target.value }))} />
+                  <select value={adhoc.niveau_accreditation} onChange={(e) => setAdhoc((p) => ({ ...p, niveau_accreditation: e.target.value }))}>
+                    {Object.entries(NIVEAU_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                  </select>
+                  <input type="text" placeholder="Affectation (ex. Accueil VIP)" required value={adhoc.affectation} onChange={(e) => setAdhoc((p) => ({ ...p, affectation: e.target.value }))} />
+                  <button type="submit" className="btn btn-primary btn-sm" disabled={saving}>Ajouter</button>
+                </form>
+              )}
+            </div>
           )}
         </>
       )}

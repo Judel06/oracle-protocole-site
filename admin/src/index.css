@@ -157,6 +157,14 @@ h1, h2, h3 { margin: 0; font-weight: 700; }
 
 .badge-gray { background: #F0F1F3; color: #5B6472; }
 
+.add-mode-tabs { display: flex; gap: 4px; margin-bottom: 10px; }
+.tab-btn {
+  background: none; border: 1.5px solid var(--border); border-radius: 999px;
+  padding: 6px 14px; font-size: .78rem; font-weight: 700; color: var(--text-soft);
+  transition: all .15s ease;
+}
+.tab-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+
 @media (max-width: 1024px) {
   .modules-grid { grid-template-columns: 1fr; }
 }
