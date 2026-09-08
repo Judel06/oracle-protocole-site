@@ -1,23 +1,36 @@
 /* =========================================================
    ORACLE — Protocole et Services | Design System
-   Navy + Doré + Crème | Playfair Display / Cormorant / Inter / Manrope
+   Palette « Tessellation » — aubergine profond + rouge/orange/vert/sarcelle/prune
+   Playfair Display / Cormorant / Inter / Manrope
    ========================================================= */
 
 :root {
-  /* Couleurs */
-  --navy: #0D1B2A;
-  --navy-2: #16273D;
-  --navy-3: #1F3A5C;
-  --gold: #C9A84C;
-  --gold-light: #E0C270;
-  --gold-dark: #A8823A;
-  --cream: #F4F1E8;
-  --cream-2: #EDE7D8;
+  /* Couleurs — ancrage sombre (remplace le navy) */
+  --navy: #34101B;
+  --navy-2: #431A28;
+  --navy-3: #5C2438;
+
+  /* Couleurs — accent principal (remplace le doré) */
+  --gold: #D98F2E;
+  --gold-light: #E8B563;
+  --gold-dark: #B5601E;
+
+  /* Couleurs — fond clair */
+  --cream: #F6F0E4;
+  --cream-2: #EFE4D0;
   --white: #FFFFFF;
-  --ink: #26261F;
-  --ink-soft: #55544c;
-  --success: #4C7A5E;
-  --error: #B3432B;
+  --ink: #2A211E;
+  --ink-soft: #5c5148;
+
+  /* Couleurs — accents multiples issus de la tessellation (services, valeurs) */
+  --accent-red: #A6301F;
+  --accent-orange: #C1602C;
+  --accent-green: #4C7A3D;
+  --accent-teal: #1F4A3E;
+  --accent-plum: #6B1F3D;
+
+  --success: #4C7A3D;
+  --error: #A6301F;
 
   /* Typographie */
   --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -28,8 +41,8 @@
   /* Rythme */
   --container-w: 1200px;
   --radius: 6px;
-  --shadow-soft: 0 10px 30px rgba(13, 27, 42, 0.12);
-  --shadow-lift: 0 20px 40px rgba(13, 27, 42, 0.18);
+  --shadow-soft: 0 10px 30px rgba(52, 16, 27, 0.14);
+  --shadow-lift: 0 20px 40px rgba(52, 16, 27, 0.2);
   --transition: 250ms cubic-bezier(.4,0,.2,1);
 }
 
@@ -130,12 +143,12 @@ section[data-theme="alt"] { background: var(--cream-2); }
 }
 .site-header.is-scrolled {
   padding: 12px 0;
-  background: rgba(13, 27, 42, 0.88);
+  background: rgba(52, 16, 27, 0.88);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 4px 24px rgba(13,27,42,.25);
+  box-shadow: 0 4px 24px rgba(52,16,27,.25);
 }
-.site-header.no-hero { background: rgba(13, 27, 42, 0.96); }
+.site-header.no-hero { background: rgba(52, 16, 27, 0.96); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 
 .logo { display: flex; align-items: center; gap: 12px; }
@@ -232,13 +245,23 @@ section[data-theme="alt"] { background: var(--cream-2); }
   aspect-ratio: 4/5;
   border-radius: var(--radius);
 }
+/* Accents triangulaires — clin d'oeil a la mosaique de reference */
 .hero-visual::before {
   content: '';
   position: absolute;
-  inset: -16px -16px auto auto;
-  width: 90%; height: 90%;
-  border: 2px solid var(--gold);
-  border-radius: var(--radius);
+  top: -22px; right: -22px;
+  width: 130px; height: 130px;
+  background: var(--accent-red);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  z-index: -1;
+}
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  bottom: -22px; left: -22px;
+  width: 150px; height: 150px;
+  background: var(--gold);
+  clip-path: polygon(0 100%, 100% 100%, 0 0);
   z-index: -1;
 }
 
@@ -297,7 +320,7 @@ section[data-theme="alt"] { background: var(--cream-2); }
   background: repeating-linear-gradient(135deg, var(--navy-2), var(--navy-2) 12px, var(--navy) 12px, var(--navy) 24px);
   border-color: var(--gold);
 }
-.placeholder-img.dark span { background: rgba(13,27,42,.85); color: var(--gold-light); }
+.placeholder-img.dark span { background: rgba(52,16,27,.85); color: var(--gold-light); }
 .placeholder-img.circle { border-radius: 50%; aspect-ratio: 1/1; min-height: 0; }
 .placeholder-img.wide { aspect-ratio: 16/10; }
 .placeholder-img.square { aspect-ratio: 1/1; }
@@ -330,8 +353,32 @@ section[data-theme="alt"] { background: var(--cream-2); }
   transition: background var(--transition);
 }
 .icon-badge svg { width: 26px; height: 26px; stroke: var(--gold); }
-.service-card:hover .icon-badge { background: var(--gold); }
-.service-card:hover .icon-badge svg { stroke: var(--navy); }
+.service-card:hover .icon-badge { transform: scale(1.06); }
+
+/* Palette tessellation : chaque service porte une couleur distincte */
+.grid-services .service-card:nth-child(1) .icon-badge { background: var(--accent-red); }
+.grid-services .service-card:nth-child(2) .icon-badge { background: var(--gold); }
+.grid-services .service-card:nth-child(3) .icon-badge { background: var(--accent-green); }
+.grid-services .service-card:nth-child(4) .icon-badge { background: var(--accent-teal); }
+.grid-services .service-card:nth-child(5) .icon-badge { background: var(--accent-plum); }
+.grid-services .icon-badge svg { stroke: var(--cream); }
+.grid-services .service-card:nth-child(1):hover { border-color: var(--accent-red); }
+.grid-services .service-card:nth-child(2):hover { border-color: var(--gold); }
+.grid-services .service-card:nth-child(3):hover { border-color: var(--accent-green); }
+.grid-services .service-card:nth-child(4):hover { border-color: var(--accent-teal); }
+.grid-services .service-card:nth-child(5):hover { border-color: var(--accent-plum); }
+
+/* Meme logique sur la page Nos Services (une couleur par ancre) */
+#protocole-officiel .icon-badge { background: var(--accent-red); }
+#etiquette-formation .icon-badge { background: var(--gold); }
+#gestion-ceremonielle .icon-badge { background: var(--accent-green); }
+#conseil-ingenierie .icon-badge { background: var(--accent-teal); }
+#image-identite .icon-badge { background: var(--accent-plum); }
+#protocole-officiel .icon-badge svg,
+#etiquette-formation .icon-badge svg,
+#gestion-ceremonielle .icon-badge svg,
+#conseil-ingenierie .icon-badge svg,
+#image-identite .icon-badge svg { stroke: var(--cream); }
 .icon-mini {
   width: 34px; height: 34px;
   border-radius: 6px;
