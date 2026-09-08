@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initPortfolioFilter();
   initActiveNav();
+  initHeroParallax();
 });
 
 /* Header : fond transparent -> glassmorphism navy au scroll */
@@ -135,6 +136,33 @@ function initPortfolioFilter() {
       });
     });
   });
+}
+
+/* Effet parallax leger sur les images de hero (accueil + pages internes) */
+function initHeroParallax() {
+  const images = document.querySelectorAll('.hero-media img');
+  if (!images.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let ticking = false;
+  const update = () => {
+    images.forEach((img) => {
+      const section = img.closest('.hero, .page-hero');
+      const rect = section.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      const baseScale = section.classList.contains('page-hero') ? 1.04 : 1.08;
+      const offset = rect.top * -0.12;
+      img.style.transform = `scale(${baseScale}) translateY(${offset}px)`;
+    });
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+  update();
 }
 
 /* Les formulaires (devis, inscription formation, contact general) sont geres
