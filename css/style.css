@@ -253,6 +253,28 @@ section[data-theme="alt"] { background: var(--cream-2); }
   opacity: .3; pointer-events: none; z-index: 0; user-select: none;
 }
 
+/* Hero d'accueil — variante encadree : portraits sur les deux bords, centre institutionnel */
+.hero.hero-framed { align-items: stretch; padding-top: 0; }
+.hero-frame-grid { display: flex; width: 100%; min-height: 100vh; }
+.hero-frame-side { flex: 0 0 clamp(150px, 17vw, 300px); position: relative; overflow: hidden; }
+.hero-frame-side img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.hero-frame-side::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(24,7,12,.15) 0%, rgba(24,7,12,.1) 55%, rgba(24,7,12,.65) 100%);
+}
+.hero-frame-side:first-child::after { background-image: linear-gradient(180deg, rgba(24,7,12,.15) 0%, rgba(24,7,12,.1) 55%, rgba(24,7,12,.65) 100%), linear-gradient(90deg, transparent 70%, rgba(24,7,12,.5) 100%); }
+.hero-frame-side:last-child::after { background-image: linear-gradient(180deg, rgba(24,7,12,.15) 0%, rgba(24,7,12,.1) 55%, rgba(24,7,12,.65) 100%), linear-gradient(270deg, transparent 70%, rgba(24,7,12,.5) 100%); }
+.hero-frame-center {
+  flex: 1; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 55%, var(--navy-3) 100%);
+  padding-top: 100px;
+}
+@media (max-width: 900px) {
+  .hero-frame-side { display: none; }
+}
+
 .hero-content { position: relative; z-index: 1; max-width: 660px; padding-bottom: 12vh; }
 .hero-content .eyebrow { color: var(--gold-light); }
 .hero-content h1 {
