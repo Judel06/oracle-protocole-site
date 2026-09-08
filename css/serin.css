@@ -1,0 +1,283 @@
+/* =========================================================
+   SERIN 2027 — Styles specifiques a la page evenement
+   Palette officielle du salon (navy/dore/blanc), distincte de la
+   palette generale d'ORACLE (le header/footer du site restent
+   inchanges ; seul le contenu de cette page utilise ces tokens).
+   ========================================================= */
+
+.serin {
+  --serin-navy: #12285C;
+  --serin-navy-deep: #0B1B3F;
+  --serin-navy-2: #1B3269;
+  --serin-gold: #C6982F;
+  --serin-gold-light: #DCB35C;
+  --serin-white: #FFFFFF;
+  --serin-offwhite: #F4F6FA;
+  --serin-red: #CE1126;
+  --serin-ink: #12285C;
+
+  --font-display: 'Archivo Black', var(--font-ui), sans-serif;
+}
+
+/* ===== Hero ===== */
+.serin-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--serin-offwhite);
+  padding: 160px 0 80px;
+  text-align: center;
+}
+.serin-hero::before {
+  content: '';
+  position: absolute;
+  top: -10%; left: -8%;
+  width: 46%; height: 140%;
+  background: var(--serin-navy-deep);
+  clip-path: polygon(0 0, 55% 0, 25% 100%, 0 100%);
+  z-index: 0;
+}
+.serin-hero::after {
+  content: '';
+  position: absolute;
+  top: -10%; left: 14%;
+  width: 14%; height: 140%;
+  background: var(--serin-gold);
+  clip-path: polygon(0 0, 100% 0, 55% 100%, 0 100%);
+  z-index: 0;
+}
+.serin-hero .container { position: relative; z-index: 1; }
+
+.serin-globe { width: 56px; height: 56px; margin: 0 auto 12px; }
+.serin-globe svg { width: 100%; height: 100%; }
+
+.serin-wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 12vw, 7.5rem);
+  line-height: .9;
+  color: var(--serin-navy);
+  margin: 0 0 .2em;
+  letter-spacing: -.01em;
+  position: relative;
+  display: inline-block;
+}
+.serin-wordmark .dot-gold { color: var(--serin-gold); }
+
+.serin-subtitle {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  color: var(--serin-navy);
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  max-width: 720px;
+  margin: 0 auto 24px;
+}
+
+.serin-theme {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  color: var(--serin-navy);
+  max-width: 620px;
+  margin: 0 auto 28px;
+}
+
+.serin-edition-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--serin-navy);
+  color: var(--serin-gold-light);
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: .18em;
+  font-size: .82rem;
+  padding: 10px 26px;
+  margin-bottom: 22px;
+}
+
+.serin-dates {
+  font-family: var(--font-display);
+  color: var(--serin-navy);
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  margin-bottom: 12px;
+}
+
+.serin-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--serin-navy);
+  margin-bottom: 36px;
+}
+.serin-location::before, .serin-location::after { content: ''; width: 44px; height: 3px; }
+.serin-location::before { background: var(--serin-navy); }
+.serin-location::after { background: var(--serin-red); }
+
+.serin-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 22px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: .82rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--serin-navy);
+}
+.serin-tags span:not(:last-child)::after { content: '·'; margin-left: 22px; color: var(--serin-gold); }
+
+.serin-credit {
+  margin-top: 28px;
+  font-family: var(--font-ui);
+  font-size: .82rem;
+  color: var(--ink-soft);
+}
+.serin-credit strong { color: var(--serin-navy); }
+
+/* ===== Bandeau compteur ===== */
+.serin-countdown-section {
+  background: linear-gradient(160deg, var(--serin-navy-deep) 0%, var(--serin-navy) 100%);
+  padding: 72px 0;
+  text-align: center;
+}
+.serin-countdown-label {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--serin-gold-light);
+  font-size: .95rem;
+  margin-bottom: 28px;
+}
+.serin-countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: clamp(14px, 4vw, 40px);
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.serin-countdown-unit { min-width: 90px; }
+.serin-countdown-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  color: var(--serin-white);
+  line-height: 1;
+}
+.serin-countdown-number .accent { color: var(--serin-gold); }
+.serin-countdown-unit-label {
+  font-family: var(--font-ui);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.7);
+  margin-top: 8px;
+}
+.serin-countdown-message {
+  font-family: var(--font-display);
+  color: var(--serin-white);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-bottom: 36px;
+}
+
+.btn-serin-gold {
+  background: var(--serin-gold);
+  color: var(--serin-navy-deep);
+}
+.btn-serin-gold:hover { background: var(--serin-gold-light); transform: translateY(-2px); }
+
+.serin-signature {
+  margin-top: 26px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  color: var(--serin-gold-light);
+  font-size: 1.05rem;
+}
+
+/* ===== Formulaire de candidature ===== */
+.serin-form-section { background: var(--serin-white); padding: 96px 0; }
+.serin-form-card {
+  max-width: 780px;
+  margin: 0 auto;
+  background: var(--serin-offwhite);
+  border: 1px solid rgba(18,40,92,.1);
+  border-radius: var(--radius);
+  padding: 44px;
+}
+.serin-form-card .field label { color: var(--serin-navy); }
+.serin-form-card .field input,
+.serin-form-card .field select,
+.serin-form-card .field textarea {
+  background: var(--serin-white);
+  border-color: rgba(18,40,92,.15);
+}
+.serin-form-card .field input:focus,
+.serin-form-card .field select:focus,
+.serin-form-card .field textarea:focus {
+  border-color: var(--serin-gold);
+}
+.serin-form-card .checkbox-option,
+.serin-form-card .radio-option {
+  background: var(--serin-white);
+  border-color: rgba(18,40,92,.15);
+}
+.serin-form-card .checkbox-option:hover,
+.serin-form-card .radio-option:hover { border-color: var(--serin-gold); }
+.serin-form-card .checkbox-option:has(input:checked),
+.serin-form-card .radio-option:has(input:checked) { border-color: var(--serin-gold); }
+.serin-form-card .checkbox-option input,
+.serin-form-card .radio-option input { accent-color: var(--serin-gold); }
+
+.serin-word-count {
+  font-family: var(--font-ui);
+  font-size: .78rem;
+  color: var(--ink-soft);
+  text-align: right;
+  margin-top: -14px;
+  margin-bottom: 22px;
+}
+.serin-word-count.over-limit { color: var(--serin-red); font-weight: 700; }
+
+.serin-file-hint {
+  font-size: .8rem;
+  color: var(--ink-soft);
+  margin-top: -14px;
+  margin-bottom: 22px;
+}
+
+.serin-conditions {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .88rem;
+  margin: 28px 0;
+}
+.serin-conditions input { margin-top: 4px; accent-color: var(--serin-gold); }
+
+/* ===== Bandeau teaser (page d'accueil ORACLE) ===== */
+.serin-teaser {
+  background: linear-gradient(120deg, #12285C 0%, #1B3269 100%);
+  padding: 48px 0;
+}
+.serin-teaser .container {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+}
+.serin-teaser-copy .eyebrow { color: #DCB35C; }
+.serin-teaser-copy h3 { color: #fff; font-size: 1.5rem; margin-bottom: .3em; }
+.serin-teaser-copy p { color: rgba(255,255,255,.8); margin: 0; }
+
+@media (max-width: 640px) {
+  .serin-hero { padding: 140px 0 60px; }
+  .serin-hero::before { width: 30%; left: -18%; }
+  .serin-hero::after { width: 9%; left: 4%; }
+  .serin-subtitle, .serin-theme { padding: 0 14px; }
+  .serin-countdown-grid { gap: 14px; }
+  .serin-countdown-unit { min-width: 70px; }
+  .serin-form-card { padding: 26px; }
+  .serin-location::before, .serin-location::after { width: 24px; }
+}

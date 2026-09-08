@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SERIN 2027 — Salon de l'Économie, des Relations Internationales et du Numérique</title>
+<meta name="description" content="SERIN 2027 : première édition du Salon de l'Économie, des Relations Internationales et du Numérique, les 18 et 19 février 2027 en Haïti. Déposez votre candidature.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/serin.css">
+</head>
+<body data-page="serin" class="serin">
+
+<!-- ===== HEADER (repris du site ORACLE) ===== -->
+<header class="site-header no-hero" id="siteHeader" data-hero="false">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">O</span>
+      <span class="logo-text">ORACLE<small>Protocole &amp; Services</small></span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="index.html" class="nav-link" data-nav="accueil">Accueil</a></li>
+        <li><a href="a-propos.html" class="nav-link" data-nav="apropos">À Propos</a></li>
+        <li><a href="services.html" class="nav-link" data-nav="services">Nos Services</a></li>
+        <li><a href="portfolio.html" class="nav-link" data-nav="portfolio">Réalisations</a></li>
+        <li><a href="contact.html" class="nav-link" data-nav="contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="#candidature" class="btn btn-gold btn-sm">Déposer ma candidature</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO SERIN ===== -->
+<section class="serin-hero">
+  <div class="container">
+    <div class="serin-globe" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C6982F" stroke-width="1.3">
+        <circle cx="12" cy="12" r="9"/>
+        <ellipse cx="12" cy="12" rx="4" ry="9"/>
+        <path d="M3 9h18M3 15h18"/>
+      </svg>
+    </div>
+
+    <h1 class="serin-wordmark">SER<span class="dot-gold">I</span>N</h1>
+    <p class="serin-subtitle">Salon de l'Économie, des Relations Internationales et du Numérique</p>
+    <p class="serin-theme">« Construisons aujourd'hui l'Économie que nous voulons pour demain… »</p>
+
+    <div class="serin-edition-bar">Première Édition</div>
+    <div class="serin-dates">18 – 19 Février 2027</div>
+    <div class="serin-location">HAÏTI</div>
+
+    <div class="serin-tags">
+      <span>Innover</span><span>Connecter</span><span>Investir</span><span>Échanger</span><span>Construire</span>
+    </div>
+
+    <p class="serin-credit">Organisé par <strong>ADIS-HAITI</strong> — Réalisé par <strong>ORACLE Protocoles et Services</strong></p>
+  </div>
+</section>
+
+<!-- ===== BANDEAU COMPTEUR + CTA ===== -->
+<section class="serin-countdown-section" id="serinCountdown">
+  <div class="container">
+    <p class="serin-countdown-label">Le SERIN ouvre ses portes dans :</p>
+
+    <div class="serin-countdown-grid">
+      <div class="serin-countdown-unit">
+        <div class="serin-countdown-number"><span data-unit="days">00</span></div>
+        <div class="serin-countdown-unit-label">Jours</div>
+      </div>
+      <div class="serin-countdown-unit">
+        <div class="serin-countdown-number"><span class="accent" data-unit="hours">00</span></div>
+        <div class="serin-countdown-unit-label">Heures</div>
+      </div>
+      <div class="serin-countdown-unit">
+        <div class="serin-countdown-number"><span data-unit="minutes">00</span></div>
+        <div class="serin-countdown-unit-label">Minutes</div>
+      </div>
+      <div class="serin-countdown-unit">
+        <div class="serin-countdown-number"><span class="accent" data-unit="seconds">00</span></div>
+        <div class="serin-countdown-unit-label">Secondes</div>
+      </div>
+    </div>
+
+    <p class="serin-countdown-message" style="display:none;"></p>
+
+    <a href="#candidature" class="btn btn-serin-gold">Déposer ma candidature</a>
+
+    <p class="serin-signature">« Des idées, des partenariats, des opportunités pour Haïti »</p>
+  </div>
+</section>
+
+<!-- ===== FORMULAIRE DE CANDIDATURE ===== -->
+<section class="serin-form-section" id="candidature">
+  <div class="container">
+    <div class="section-head center reveal" style="max-width:640px;">
+      <span class="eyebrow" style="color:var(--serin-gold);">Rejoignez le SERIN 2027</span>
+      <h2 style="color:var(--serin-navy);">Déposer ma candidature</h2>
+      <p style="color:var(--ink-soft);">Exposant, intervenant, partenaire ou délégation — présentez votre organisation et son projet de participation.</p>
+    </div>
+
+    <div class="serin-form-card reveal">
+      <div class="form-status" id="serinFormStatus" role="status" aria-live="polite"></div>
+
+      <form id="serinCandidatureForm" novalidate enctype="multipart/form-data">
+        <input type="text" name="site_web" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="serin-organisation">Nom de l'organisation / entreprise / institution <span class="required">*</span></label>
+            <input type="text" id="serin-organisation" name="nom_organisation" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="serin-secteur">Secteur d'activité <span class="required">*</span></label>
+            <input type="text" id="serin-secteur" name="secteur_activite" required>
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="serin-type">Type de candidature <span class="required">*</span></label>
+          <select id="serin-type" name="type_candidature" required>
+            <option value="">Sélectionner…</option>
+            <option value="exposant">Exposant</option>
+            <option value="intervenant_paneliste">Intervenant / Panéliste</option>
+            <option value="partenaire">Partenaire</option>
+            <option value="delegation_participante">Délégation participante</option>
+          </select>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field">
+          <label>Axe(s) thématique(s) concerné(s) <span class="required">*</span></label>
+          <div class="checkbox-group" id="serin-axes-group">
+            <label class="checkbox-option"><input type="checkbox" name="axes_thematiques" value="economie"> Économie</label>
+            <label class="checkbox-option"><input type="checkbox" name="axes_thematiques" value="relations_internationales"> Relations Internationales</label>
+            <label class="checkbox-option"><input type="checkbox" name="axes_thematiques" value="numerique"> Numérique</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="serin-representant">Nom du représentant <span class="required">*</span></label>
+            <input type="text" id="serin-representant" name="nom_representant" required autocomplete="name">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="serin-fonction">Fonction <span class="required">*</span></label>
+            <input type="text" id="serin-fonction" name="fonction" required autocomplete="organization-title">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="serin-email">Email <span class="required">*</span></label>
+            <input type="email" id="serin-email" name="email" required autocomplete="email">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="serin-telephone">Téléphone <span class="required">*</span></label>
+            <input type="tel" id="serin-telephone" name="telephone" required autocomplete="tel">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="serin-pays">Pays <span class="required">*</span></label>
+            <input type="text" id="serin-pays" name="pays" required autocomplete="country-name">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="serin-ville">Ville <span class="required">*</span></label>
+            <input type="text" id="serin-ville" name="ville" required autocomplete="address-level2">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="serin-motivation">Présentation de l'organisation et motivation <span class="required">*</span></label>
+          <textarea id="serin-motivation" name="presentation_motivation" required placeholder="Présentez votre organisation et votre projet de participation au SERIN 2027 (300 mots maximum recommandé)…" style="min-height:160px;"></textarea>
+          <p class="field-error"></p>
+        </div>
+        <p class="serin-word-count" id="serinWordCount">0 / 300 mots</p>
+
+        <div class="field">
+          <label for="serin-nb-personnes">Nombre de personnes dans la délégation</label>
+          <input type="number" id="serin-nb-personnes" name="nombre_personnes_delegation" min="1" step="1" placeholder="Si applicable">
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field">
+          <label>Besoins spécifiques</label>
+          <div class="checkbox-group">
+            <label class="checkbox-option"><input type="checkbox" name="besoins_specifiques" value="stand_exposition"> Stand d'exposition</label>
+            <label class="checkbox-option"><input type="checkbox" name="besoins_specifiques" value="prise_parole_panel"> Prise de parole en panel</label>
+            <label class="checkbox-option"><input type="checkbox" name="besoins_specifiques" value="rencontres_b2b_b2g"> Rencontres B2B / B2G</label>
+            <label class="checkbox-option"><input type="checkbox" name="besoins_specifiques" value="autre"> Autre</label>
+          </div>
+        </div>
+
+        <div class="field" id="serin-besoin-autre-wrap" style="display:none;">
+          <label for="serin-besoin-autre">Précisez votre besoin</label>
+          <input type="text" id="serin-besoin-autre" name="besoin_autre_precision">
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="serin-piece-jointe">Pièce jointe (présentation PDF ou logo haute résolution)</label>
+          <input type="file" id="serin-piece-jointe" name="piece_jointe" accept=".pdf,.jpg,.jpeg,.png">
+          <p class="field-error"></p>
+        </div>
+        <p class="serin-file-hint">Formats acceptés : PDF, JPG, PNG — 10 Mo maximum.</p>
+
+        <div class="serin-conditions">
+          <input type="checkbox" id="serin-accepte-conditions" name="accepte_conditions" required>
+          <label for="serin-accepte-conditions" style="margin:0;">J'accepte les conditions de participation au SERIN 2027. <span class="required">*</span></label>
+        </div>
+
+        <button type="submit" class="btn btn-serin-gold btn-block">Soumettre ma candidature</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER (repris du site ORACLE) ===== -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span class="logo-mark">O</span><span class="logo-text">ORACLE</span></div>
+      <p>Service de Protocole et de Gestion Cérémonielle d'ADIS-HAITI.</p>
+      <p class="footer-ecosystem">Membre de l'écosystème <a href="#">ADIS-HAITI</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html" data-nav="accueil">Accueil</a></li>
+        <li><a href="a-propos.html" data-nav="apropos">À Propos</a></li>
+        <li><a href="services.html" data-nav="services">Nos Services</a></li>
+        <li><a href="portfolio.html" data-nav="portfolio">Réalisations</a></li>
+        <li><a href="contact.html" data-nav="contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>SERIN 2027</h4>
+      <ul>
+        <li><a href="#candidature">Déposer ma candidature</a></li>
+        <li>18 – 19 Février 2027</li>
+        <li>Haïti</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li>Port-au-Prince, Haïti</li>
+        <li>+509 4245-4545</li>
+        <li>admin@oracleprotocole.com</li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 ORACLE — Protocoles et Services. Tous droits réservés.</p>
+    <p><a href="#">Mentions légales</a></p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/forms.js"></script>
+<script src="js/serin-countdown.js"></script>
+<script src="js/serin-form.js"></script>
+</body>
+</html>
