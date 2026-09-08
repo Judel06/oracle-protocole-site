@@ -253,10 +253,16 @@ section[data-theme="alt"] { background: var(--cream-2); }
   opacity: .3; pointer-events: none; z-index: 0; user-select: none;
 }
 
-/* Hero d'accueil — variante encadree : portraits sur les deux bords, centre institutionnel */
+/* Hero d'accueil — variante encadree : portraits alignes sur le logo / bouton du header, centre institutionnel
+   Reperes calcules a partir du header reel (.container max-width:1200px, padding:24px) :
+   - bord droit du logo (pointe du "O") = 24px (padding) + 42px (largeur .logo-mark) = 66px, + demi-espace excedentaire au-dela de 1200px
+   - bord droit du bouton "Demander un devis" = 24px (padding), + le meme demi-espace excedentaire
+   Verifie par mesure reelle a 1200/1280/1440/1920px — voir notes de validation. */
 .hero.hero-framed { align-items: stretch; padding-top: 0; }
 .hero-frame-grid { display: flex; width: 100%; min-height: 100vh; }
-.hero-frame-side { flex: 0 0 clamp(150px, 17vw, 300px); position: relative; overflow: hidden; }
+.hero-frame-side { position: relative; overflow: hidden; flex-shrink: 0; }
+.hero-frame-side:first-child { flex-basis: max(66px, calc((100vw - 1200px) / 2 + 66px)); }
+.hero-frame-side:last-child { flex-basis: max(24px, calc((100vw - 1200px) / 2 + 24px)); }
 .hero-frame-side img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 .hero-frame-side::after {
   content: '';
@@ -271,7 +277,9 @@ section[data-theme="alt"] { background: var(--cream-2); }
   background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 55%, var(--navy-3) 100%);
   padding-top: 100px;
 }
-@media (max-width: 900px) {
+/* Sous 1100px, le header deborde horizontalement (bug preexistant hors perimetre) :
+   les formules ci-dessus ne seraient plus fiables, donc les panneaux lateraux se masquent avant ce seuil. */
+@media (max-width: 1100px) {
   .hero-frame-side { display: none; }
 }
 
