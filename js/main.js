@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initCounters();
   initPortfolioFilter();
-  initContactForm();
   initActiveNav();
 });
 
@@ -138,54 +137,5 @@ function initPortfolioFilter() {
   });
 }
 
-/* Formulaire de contact / demande de devis (validation cote client) */
-function initContactForm() {
-  const form = document.getElementById('quoteForm');
-  if (!form) return;
-  const status = document.getElementById('formStatus');
-
-  const showError = (field, message) => {
-    const wrap = field.closest('.field');
-    wrap.classList.add('invalid');
-    const errorEl = wrap.querySelector('.field-error');
-    if (errorEl) errorEl.textContent = message;
-  };
-  const clearError = (field) => {
-    field.closest('.field').classList.remove('invalid');
-  };
-
-  form.querySelectorAll('input, select, textarea').forEach(field => {
-    field.addEventListener('input', () => clearError(field));
-  });
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let valid = true;
-
-    const requiredFields = form.querySelectorAll('[required]');
-    requiredFields.forEach(field => {
-      clearError(field);
-      if (!field.value.trim()) {
-        showError(field, 'Ce champ est requis.');
-        valid = false;
-      } else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
-        showError(field, 'Veuillez entrer une adresse email valide.');
-        valid = false;
-      }
-    });
-
-    status.classList.remove('show', 'success', 'error');
-
-    if (!valid) {
-      status.textContent = 'Veuillez corriger les champs indiqués ci-dessous.';
-      status.classList.add('show', 'error');
-      return;
-    }
-
-    /* Pas de backend connecte : simulation de confirmation cote client.
-       A brancher sur un service d'envoi (email, API) lors de la mise en production. */
-    status.textContent = 'Merci. Votre demande a bien ete enregistree — notre equipe vous recontactera sous 48h.';
-    status.classList.add('show', 'success');
-    form.reset();
-  });
-}
+/* Les formulaires (devis, inscription formation, contact general) sont geres
+   par js/forms.js, connecte a Supabase. */

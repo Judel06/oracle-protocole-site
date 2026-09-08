@@ -111,6 +111,86 @@
     </div>
     <img class="service-visual placeholder-img wide reveal" src="assets/img/services-etiquette-formation.jpg" alt="Duo en tenue formelle portant le foulard ADIS-HAITI, posture de présentation protocolaire">
   </div>
+
+  <div class="container reveal" style="max-width:720px; margin-top:64px;">
+    <div class="form-card" id="inscription-formation">
+      <h3 style="font-size:1.3rem;">S'inscrire à une formation</h3>
+      <p style="color:var(--ink-soft); font-size:.92rem;">Réservez une session pour vos équipes — nous confirmons la période sous 48h.</p>
+
+      <div class="form-status" id="trainingFormStatus" role="status" aria-live="polite"></div>
+
+      <form id="trainingForm" novalidate>
+        <input type="text" name="site_web" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="training-nom">Nom complet <span class="required">*</span></label>
+            <input type="text" id="training-nom" name="nom_complet" required autocomplete="name">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="training-organisation">Organisation</label>
+            <input type="text" id="training-organisation" name="organisation" autocomplete="organization">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="training-email">Email <span class="required">*</span></label>
+            <input type="email" id="training-email" name="email" required autocomplete="email">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="training-telephone">Téléphone</label>
+            <input type="tel" id="training-telephone" name="telephone" autocomplete="tel">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="training-formation">Formation souhaitée <span class="required">*</span></label>
+          <select id="training-formation" name="formation" required>
+            <option value="">Sélectionner…</option>
+            <option value="protocole_table">Protocole de table</option>
+            <option value="codes_vestimentaires">Codes vestimentaires</option>
+            <option value="communication_non_verbale">Communication non-verbale</option>
+            <option value="protocole_general">Protocole général</option>
+          </select>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field">
+          <label>Format souhaité <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="format_souhaite" value="presentiel" required> Présentiel</label>
+            <label class="radio-option"><input type="radio" name="format_souhaite" value="distance"> À distance</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="training-participants">Nombre de participants à inscrire <span class="required">*</span></label>
+            <input type="number" id="training-participants" name="nombre_participants" min="1" step="1" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="training-periode">Période souhaitée</label>
+            <input type="text" id="training-periode" name="periode_souhaitee" placeholder="Ex. Mars 2027">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="training-message">Message complémentaire</label>
+          <textarea id="training-message" name="message" placeholder="Précisions utiles (optionnel)…"></textarea>
+          <p class="field-error"></p>
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-block">S'inscrire</button>
+      </form>
+    </div>
+  </div>
 </section>
 
 <!-- ===== SERVICE 3 ===== -->
@@ -231,5 +311,8 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/forms.js"></script>
 </body>
 </html>

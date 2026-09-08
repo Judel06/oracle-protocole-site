@@ -60,9 +60,11 @@
         <h2 style="font-size:1.5rem;">Demande de devis</h2>
         <p style="color:var(--ink-soft); font-size:.92rem;">Décrivez votre projet, nous revenons vers vous avec une proposition adaptée.</p>
 
-        <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+        <div class="form-status" id="quoteFormStatus" role="status" aria-live="polite"></div>
 
         <form id="quoteForm" novalidate>
+          <input type="text" name="site_web" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
           <div class="form-row">
             <div class="field">
               <label for="fullname">Nom complet <span class="required">*</span></label>
@@ -72,6 +74,19 @@
             <div class="field">
               <label for="organization">Organisation</label>
               <input type="text" id="organization" name="organization" autocomplete="organization">
+              <p class="field-error"></p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="fonction">Fonction</label>
+              <input type="text" id="fonction" name="fonction" autocomplete="organization-title">
+              <p class="field-error"></p>
+            </div>
+            <div class="field">
+              <label for="participants">Nombre de participants estimé</label>
+              <input type="number" id="participants" name="participants" min="0" step="1">
               <p class="field-error"></p>
             </div>
           </div>
@@ -94,11 +109,9 @@
               <label for="event-type">Type d'événement <span class="required">*</span></label>
               <select id="event-type" name="event-type" required>
                 <option value="">Sélectionner…</option>
-                <option value="ceremonie-officielle">Cérémonie officielle</option>
-                <option value="visite-diplomatique">Visite diplomatique</option>
-                <option value="formation">Formation / Étiquette</option>
-                <option value="conseil">Conseil &amp; Ingénierie Protocolaire</option>
-                <option value="image-marque">Image de Marque &amp; Identité Visuelle</option>
+                <option value="ceremonie_officielle">Cérémonie officielle</option>
+                <option value="visite_diplomatique">Visite diplomatique</option>
+                <option value="evenement_institutionnel">Événement institutionnel</option>
                 <option value="autre">Autre</option>
               </select>
               <p class="field-error"></p>
@@ -111,12 +124,23 @@
           </div>
 
           <div class="field">
-            <label for="message">Message <span class="required">*</span></label>
-            <textarea id="message" name="message" required placeholder="Décrivez votre événement, le nombre de participants, le contexte protocolaire…"></textarea>
+            <label>Service(s) souhaité(s)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-option"><input type="checkbox" name="services" value="Protocole Officiel &amp; Diplomatique"> Protocole Officiel &amp; Diplomatique</label>
+              <label class="checkbox-option"><input type="checkbox" name="services" value="Étiquette &amp; Formation"> Étiquette &amp; Formation</label>
+              <label class="checkbox-option"><input type="checkbox" name="services" value="Gestion Cérémonielle d'Événements"> Gestion Cérémonielle d'Événements</label>
+              <label class="checkbox-option"><input type="checkbox" name="services" value="Conseil &amp; Ingénierie Protocolaire"> Conseil &amp; Ingénierie Protocolaire</label>
+              <label class="checkbox-option"><input type="checkbox" name="services" value="Image de Marque &amp; Identité Visuelle"> Image de Marque &amp; Identité Visuelle</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="message">Description du projet <span class="required">*</span></label>
+            <textarea id="message" name="message" required placeholder="Décrivez votre événement et le contexte protocolaire…"></textarea>
             <p class="field-error"></p>
           </div>
 
-          <button type="submit" class="btn btn-gold btn-block">Envoyer la demande</button>
+          <button type="submit" class="btn btn-gold btn-block">Envoyer ma demande</button>
         </form>
       </div>
     </div>
@@ -156,6 +180,65 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ===== CONTACT GÉNÉRAL ===== -->
+<section class="section-sm" data-theme="alt">
+  <div class="container" style="max-width:640px; margin:0 auto;">
+    <div class="reveal" style="text-align:center; margin-bottom:32px;">
+      <span class="eyebrow">Une autre question ?</span>
+      <h2 style="font-size:1.6rem;">Contact général</h2>
+      <p style="color:var(--ink-soft);">Renseignement, partenariat, demande presse — écrivez-nous directement.</p>
+    </div>
+
+    <div class="form-card reveal">
+      <div class="form-status" id="generalContactFormStatus" role="status" aria-live="polite"></div>
+
+      <form id="generalContactForm" novalidate>
+        <input type="text" name="site_web" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="contact-nom">Nom <span class="required">*</span></label>
+            <input type="text" id="contact-nom" name="nom" required autocomplete="name">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="contact-email">Email <span class="required">*</span></label>
+            <input type="email" id="contact-email" name="email" required autocomplete="email">
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="contact-telephone">Téléphone</label>
+            <input type="tel" id="contact-telephone" name="telephone" autocomplete="tel">
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="contact-sujet">Sujet <span class="required">*</span></label>
+            <select id="contact-sujet" name="sujet" required>
+              <option value="">Sélectionner…</option>
+              <option value="renseignement_general">Renseignement général</option>
+              <option value="partenariat">Demande de partenariat</option>
+              <option value="presse">Demande presse</option>
+              <option value="autre">Autre</option>
+            </select>
+            <p class="field-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="contact-message">Message <span class="required">*</span></label>
+          <textarea id="contact-message" name="message" required placeholder="Votre message…"></textarea>
+          <p class="field-error"></p>
+        </div>
+
+        <button type="submit" class="btn btn-outline-dark btn-block">Envoyer</button>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -203,21 +286,33 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/forms.js"></script>
 <script>
-  // Pré-sélection du type d'événement si arrivée depuis une carte "Demander ce service"
+  // Pré-sélection du type d'événement + des services si arrivée depuis une carte "Demander ce service"
   (function() {
     const params = new URLSearchParams(window.location.search);
     const service = params.get('service');
-    const map = {
-      'protocole-officiel': 'ceremonie-officielle',
-      'etiquette-formation': 'formation',
-      'gestion-ceremonielle': 'ceremonie-officielle',
-      'conseil-ingenierie': 'conseil',
-      'image-identite': 'image-marque'
+    const eventTypeMap = {
+      'protocole-officiel': 'ceremonie_officielle',
+      'etiquette-formation': 'evenement_institutionnel',
+      'gestion-ceremonielle': 'ceremonie_officielle',
+      'conseil-ingenierie': 'evenement_institutionnel',
+      'image-identite': 'evenement_institutionnel'
     };
-    if (service && map[service]) {
+    const serviceLabelMap = {
+      'protocole-officiel': "Protocole Officiel & Diplomatique",
+      'etiquette-formation': "Étiquette & Formation",
+      'gestion-ceremonielle': "Gestion Cérémonielle d'Événements",
+      'conseil-ingenierie': "Conseil & Ingénierie Protocolaire",
+      'image-identite': "Image de Marque & Identité Visuelle"
+    };
+    if (service && eventTypeMap[service]) {
       const select = document.getElementById('event-type');
-      if (select) select.value = map[service];
+      if (select) select.value = eventTypeMap[service];
+      const checkbox = document.querySelector(`input[name="services"][value="${serviceLabelMap[service]}"]`);
+      if (checkbox) checkbox.checked = true;
     }
   })();
 </script>
