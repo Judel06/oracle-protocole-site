@@ -329,6 +329,68 @@ img.placeholder-img {
   padding: 0;
   min-height: 0;
 }
+
+/* ===== Visuel de marque (composition triangulaire) =====
+   Remplace le placeholder raye la ou aucune photo ne convient : un mini clin d'oeil
+   a la mosaique de reference plutot qu'une case vide, sans visage fictif. */
+.placeholder-img.art {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  background: var(--cream-2);
+  padding: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.placeholder-img.art .tri { position: absolute; }
+.placeholder-img.art .tri-a { inset: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.placeholder-img.art .tri-b { inset: 0; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
+.placeholder-img.art .tri-c { top: 0; right: 0; width: 38%; height: 38%; clip-path: polygon(100% 0, 100% 100%, 0 0); opacity: .92; }
+.placeholder-img.art .art-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.placeholder-img.art .art-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(246,240,228,.16);
+  border: 1.5px solid rgba(246,240,228,.55);
+  display: flex; align-items: center; justify-content: center;
+}
+.placeholder-img.art .art-icon svg { width: 30px; height: 30px; stroke: var(--cream); }
+.placeholder-img.art .art-label {
+  font-family: var(--font-ui); font-size: .68rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--cream);
+  background: rgba(52,16,27,.35); padding: 5px 14px; border-radius: 999px;
+}
+
+.art-v1 .tri-a { background: var(--cream-2); }
+.art-v1 .tri-b { background: var(--accent-teal); }
+.art-v1 .tri-c { background: var(--gold); }
+.art-v1 .art-label { color: var(--navy); background: rgba(246,240,228,.75); }
+.art-v1 .art-icon { background: rgba(52,16,27,.12); border-color: rgba(52,16,27,.35); }
+.art-v1 .art-icon svg { stroke: var(--navy); }
+
+.art-v2 .tri-a { background: var(--navy-2); }
+.art-v2 .tri-b { background: var(--accent-red); }
+.art-v2 .tri-c { background: var(--gold); }
+
+.art-v3 .tri-a { background: var(--cream-2); }
+.art-v3 .tri-b { background: var(--gold); }
+.art-v3 .tri-c { background: var(--accent-green); }
+.art-v3 .art-label { color: var(--navy); background: rgba(246,240,228,.75); }
+.art-v3 .art-icon { background: rgba(52,16,27,.12); border-color: rgba(52,16,27,.35); }
+.art-v3 .art-icon svg { stroke: var(--navy); }
+
+.art-v4 .tri-a { background: var(--navy-2); }
+.art-v4 .tri-b { background: var(--accent-plum); }
+.art-v4 .tri-c { background: var(--accent-orange); }
+
+/* Avatars d'equipe sans photo : meme logique en cercle, icone silhouette */
+.placeholder-img.art.circle .art-icon { width: 54px; height: 54px; }
+.placeholder-img.art.circle .art-label { display: none; }
+.art-avatar-1 .tri-a { background: var(--accent-red); }
+.art-avatar-1 .tri-b { background: var(--navy-2); }
+.art-avatar-2 .tri-a { background: var(--accent-green); }
+.art-avatar-2 .tri-b { background: var(--navy-2); }
 .placeholder-img.dark span { background: rgba(52,16,27,.85); color: var(--gold-light); }
 .placeholder-img.circle { border-radius: 50%; aspect-ratio: 1/1; min-height: 0; }
 .placeholder-img.wide { aspect-ratio: 16/10; }
