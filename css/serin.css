@@ -19,125 +19,130 @@
   --font-display: 'Archivo Black', var(--font-ui), sans-serif;
 }
 
+.serin-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-ui); font-weight: 800; font-size: .78rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--serin-navy); background: rgba(198,152,47,.14);
+  padding: 8px 18px; border-radius: 999px; margin-bottom: 24px;
+}
+.serin-eyebrow-dark {
+  display: inline-block;
+  font-family: var(--font-ui); font-weight: 800; font-size: .78rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--serin-gold); margin-bottom: 10px;
+}
+
 /* ===== Hero ===== */
 .serin-hero {
   position: relative;
   overflow: hidden;
   background: var(--serin-offwhite);
-  padding: 160px 0 80px;
-  text-align: center;
+  padding: 156px 0 90px;
+}
+.serin-hero-map {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(18,40,92,.14) 1.4px, transparent 1.4px);
+  background-size: 20px 20px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 90% at 30% 40%, #000 40%, transparent 78%);
+  mask-image: radial-gradient(ellipse 70% 90% at 30% 40%, #000 40%, transparent 78%);
+  z-index: 0;
 }
 .serin-hero::before {
   content: '';
   position: absolute;
-  top: -10%; left: -8%;
-  width: 46%; height: 140%;
+  top: -12%; left: -10%;
+  width: 30%; height: 145%;
   background: var(--serin-navy-deep);
-  clip-path: polygon(0 0, 55% 0, 25% 100%, 0 100%);
+  clip-path: polygon(0 0, 60% 0, 30% 100%, 0 100%);
   z-index: 0;
 }
 .serin-hero::after {
   content: '';
   position: absolute;
-  top: -10%; left: 14%;
-  width: 14%; height: 140%;
+  top: -12%; left: 10%;
+  width: 9%; height: 145%;
   background: var(--serin-gold);
   clip-path: polygon(0 0, 100% 0, 55% 100%, 0 100%);
   z-index: 0;
 }
-.serin-hero .container { position: relative; z-index: 1; }
-
-.serin-globe { width: 56px; height: 56px; margin: 0 auto 12px; }
-.serin-globe svg { width: 100%; height: 100%; }
+.serin-hero-grid {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
 
 .serin-wordmark {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 12vw, 7.5rem);
+  font-size: clamp(3rem, 7vw, 5rem);
   line-height: .9;
   color: var(--serin-navy);
-  margin: 0 0 .2em;
+  margin: 0 0 .18em;
   letter-spacing: -.01em;
-  position: relative;
-  display: inline-block;
 }
-.serin-wordmark .dot-gold { color: var(--serin-gold); }
+.serin-wordmark .gold-i { color: var(--serin-gold); }
 
 .serin-subtitle {
-  font-family: var(--font-ui);
-  font-weight: 800;
-  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
   color: var(--serin-navy);
-  text-transform: uppercase;
-  letter-spacing: .02em;
-  max-width: 720px;
-  margin: 0 auto 24px;
+  max-width: 560px;
+  margin: 0 0 18px;
 }
 
 .serin-theme {
   font-family: var(--font-accent);
   font-style: italic;
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
-  color: var(--serin-navy);
-  max-width: 620px;
-  margin: 0 auto 28px;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 520px;
+  margin: 0 0 32px;
 }
 
-.serin-edition-bar {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--serin-navy);
-  color: var(--serin-gold-light);
-  font-family: var(--font-ui);
-  font-weight: 800;
-  letter-spacing: .18em;
-  font-size: .82rem;
-  padding: 10px 26px;
-  margin-bottom: 22px;
-}
-
-.serin-dates {
-  font-family: var(--font-display);
-  color: var(--serin-navy);
-  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
-  margin-bottom: 12px;
-}
-
-.serin-location {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  font-family: var(--font-ui);
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: var(--serin-navy);
-  margin-bottom: 36px;
-}
-.serin-location::before, .serin-location::after { content: ''; width: 44px; height: 3px; }
-.serin-location::before { background: var(--serin-navy); }
-.serin-location::after { background: var(--serin-red); }
-
-.serin-tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px 22px;
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: .82rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--serin-navy);
-}
-.serin-tags span:not(:last-child)::after { content: '·'; margin-left: 22px; color: var(--serin-gold); }
+.serin-hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 30px; }
+.btn-serin-navy { background: var(--serin-navy); color: var(--serin-white); }
+.btn-serin-navy:hover { background: var(--serin-navy-2); transform: translateY(-2px); }
+.btn-serin-outline { border: 2px solid var(--serin-navy); color: var(--serin-navy); background: transparent; }
+.btn-serin-outline:hover { background: var(--serin-navy); color: var(--serin-white); transform: translateY(-2px); }
 
 .serin-credit {
-  margin-top: 28px;
   font-family: var(--font-ui);
   font-size: .82rem;
   color: var(--ink-soft);
 }
 .serin-credit strong { color: var(--serin-navy); }
+
+/* ===== Carte "en bref" (hero, colonne droite) ===== */
+.serin-fact-card {
+  position: relative; z-index: 1;
+  background: var(--serin-navy);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  box-shadow: 0 24px 48px rgba(11,27,63,.25);
+}
+.serin-fact-card .serin-globe { width: 42px; height: 42px; margin-bottom: 14px; }
+.serin-fact-title {
+  font-family: var(--font-ui); font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; font-size: .8rem; color: var(--serin-gold-light);
+  margin-bottom: 20px;
+}
+.serin-fact-list { list-style: none; margin: 0 0 26px; padding: 0; }
+.serin-fact-list li {
+  padding: 16px 0; border-top: 1px solid rgba(255,255,255,.12);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.serin-fact-list li:last-child { padding-bottom: 0; }
+.serin-fact-list strong { color: var(--serin-white); font-size: 1rem; }
+.serin-fact-list span { color: rgba(255,255,255,.65); font-size: .84rem; }
+.serin-motto-row {
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
+  font-family: var(--font-ui); font-weight: 700; font-size: .72rem;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--serin-gold-light);
+  border-top: 1px solid rgba(255,255,255,.12); padding-top: 18px;
+}
 
 /* ===== Bandeau compteur ===== */
 .serin-countdown-section {
@@ -157,18 +162,26 @@
 .serin-countdown-grid {
   display: flex;
   justify-content: center;
-  gap: clamp(14px, 4vw, 40px);
+  align-items: baseline;
+  gap: clamp(8px, 2vw, 20px);
   flex-wrap: wrap;
   margin-bottom: 36px;
 }
-.serin-countdown-unit { min-width: 90px; }
+.serin-countdown-unit { min-width: 84px; }
 .serin-countdown-number {
   font-family: var(--font-display);
   font-size: clamp(2.4rem, 7vw, 4.2rem);
   color: var(--serin-white);
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
-.serin-countdown-number .accent { color: var(--serin-gold); }
+.serin-countdown-sep {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--serin-gold);
+  line-height: 1;
+  transform: translateY(-6px);
+}
 .serin-countdown-unit-label {
   font-family: var(--font-ui);
   font-size: .72rem;
@@ -198,37 +211,90 @@
   font-size: 1.05rem;
 }
 
+/* ===== Chiffres cles ===== */
+.serin-stats { background: var(--serin-white); padding: 56px 0; border-bottom: 1px solid rgba(18,40,92,.08); }
+.serin-stats-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center;
+}
+.serin-stat-number, .serin-stat-number-text {
+  font-family: var(--font-display); color: var(--serin-navy);
+  font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1;
+}
+.serin-stat-label {
+  font-family: var(--font-ui); font-size: .78rem; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-soft); margin-top: 10px;
+}
+
+/* ===== Axes thematiques ===== */
+.serin-axes { background: var(--serin-offwhite); padding: 96px 0; }
+.serin-axes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.serin-axe-card {
+  background: var(--serin-white); border: 1px solid rgba(18,40,92,.1);
+  border-radius: var(--radius); padding: 34px 28px;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.serin-axe-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(18,40,92,.12); border-color: var(--serin-gold); }
+.serin-axe-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(198,152,47,.14);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+}
+.serin-axe-icon svg { width: 26px; height: 26px; }
+.serin-axe-card h3 { color: var(--serin-navy); font-size: 1.2rem; margin-bottom: .5em; }
+.serin-axe-card p { color: var(--ink-soft); font-size: .93rem; margin: 0; }
+
+/* ===== Organisateurs ===== */
+.serin-organizers { background: var(--serin-white); padding: 64px 0 96px; }
+.serin-organizers-label {
+  text-align: center; font-family: var(--font-ui); font-weight: 700;
+  font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 28px;
+}
+.serin-organizers-row { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+.serin-organizer { display: flex; align-items: center; gap: 16px; }
+.serin-organizer-mark {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 2px solid var(--serin-gold); color: var(--serin-navy);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif); font-weight: 700; font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.serin-organizer strong { display: block; color: var(--serin-navy); font-size: .98rem; }
+.serin-organizer span { color: var(--ink-soft); font-size: .82rem; }
+
 /* ===== Formulaire de candidature ===== */
-.serin-form-section { background: var(--serin-white); padding: 96px 0; }
+.serin-form-section { background: var(--serin-offwhite); padding: 96px 0; }
 .serin-form-card {
   max-width: 780px;
   margin: 0 auto;
-  background: var(--serin-offwhite);
+  background: var(--serin-white);
   border: 1px solid rgba(18,40,92,.1);
   border-radius: var(--radius);
   padding: 44px;
+  box-shadow: 0 16px 40px rgba(18,40,92,.08);
 }
 .serin-form-card .field label { color: var(--serin-navy); }
 .serin-form-card .field input,
 .serin-form-card .field select,
 .serin-form-card .field textarea {
-  background: var(--serin-white);
+  background: var(--serin-offwhite);
   border-color: rgba(18,40,92,.15);
 }
 .serin-form-card .field input:focus,
 .serin-form-card .field select:focus,
 .serin-form-card .field textarea:focus {
   border-color: var(--serin-gold);
+  background: var(--serin-white);
 }
 .serin-form-card .checkbox-option,
 .serin-form-card .radio-option {
-  background: var(--serin-white);
+  background: var(--serin-offwhite);
   border-color: rgba(18,40,92,.15);
 }
 .serin-form-card .checkbox-option:hover,
 .serin-form-card .radio-option:hover { border-color: var(--serin-gold); }
 .serin-form-card .checkbox-option:has(input:checked),
-.serin-form-card .radio-option:has(input:checked) { border-color: var(--serin-gold); }
+.serin-form-card .radio-option:has(input:checked) { border-color: var(--serin-gold); background: var(--serin-white); }
 .serin-form-card .checkbox-option input,
 .serin-form-card .radio-option input { accent-color: var(--serin-gold); }
 
@@ -271,13 +337,21 @@
 .serin-teaser-copy h3 { color: #fff; font-size: 1.5rem; margin-bottom: .3em; }
 .serin-teaser-copy p { color: rgba(255,255,255,.8); margin: 0; }
 
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .serin-hero-grid { grid-template-columns: 1fr; }
+  .serin-fact-card { max-width: 460px; }
+  .serin-axes-grid { grid-template-columns: 1fr; }
+  .serin-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+}
+
 @media (max-width: 640px) {
   .serin-hero { padding: 140px 0 60px; }
   .serin-hero::before { width: 30%; left: -18%; }
   .serin-hero::after { width: 9%; left: 4%; }
-  .serin-subtitle, .serin-theme { padding: 0 14px; }
-  .serin-countdown-grid { gap: 14px; }
-  .serin-countdown-unit { min-width: 70px; }
+  .serin-countdown-grid { gap: 8px; }
+  .serin-countdown-unit { min-width: 62px; }
+  .serin-countdown-sep { display: none; }
   .serin-form-card { padding: 26px; }
-  .serin-location::before, .serin-location::after { width: 24px; }
+  .serin-organizers-row { flex-direction: column; align-items: center; gap: 28px; }
 }

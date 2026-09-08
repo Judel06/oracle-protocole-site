@@ -40,28 +40,43 @@
 
 <!-- ===== HERO SERIN ===== -->
 <section class="serin-hero">
-  <div class="container">
-    <div class="serin-globe" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#C6982F" stroke-width="1.3">
-        <circle cx="12" cy="12" r="9"/>
-        <ellipse cx="12" cy="12" rx="4" ry="9"/>
-        <path d="M3 9h18M3 15h18"/>
-      </svg>
+  <div class="serin-hero-map" aria-hidden="true"></div>
+  <div class="container serin-hero-grid">
+
+    <div class="serin-hero-copy">
+      <span class="serin-eyebrow">Première édition — 18 &amp; 19 février 2027</span>
+      <h1 class="serin-wordmark">SER<span class="gold-i">I</span>N</h1>
+      <p class="serin-subtitle">Salon de l'Économie, des Relations Internationales et du Numérique</p>
+      <p class="serin-theme">« Construisons aujourd'hui l'Économie que nous voulons pour demain… »</p>
+
+      <div class="serin-hero-actions">
+        <a href="#candidature" class="btn btn-serin-navy">Déposer ma candidature</a>
+        <a href="#axes" class="btn btn-serin-outline">Découvrir le programme</a>
+      </div>
+
+      <p class="serin-credit">Organisé par <strong>ADIS-HAITI</strong> — Réalisé par <strong>ORACLE Protocoles et Services</strong></p>
     </div>
 
-    <h1 class="serin-wordmark">SER<span class="dot-gold">I</span>N</h1>
-    <p class="serin-subtitle">Salon de l'Économie, des Relations Internationales et du Numérique</p>
-    <p class="serin-theme">« Construisons aujourd'hui l'Économie que nous voulons pour demain… »</p>
+    <aside class="serin-fact-card">
+      <div class="serin-globe" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C6982F" stroke-width="1.3">
+          <circle cx="12" cy="12" r="9"/>
+          <ellipse cx="12" cy="12" rx="4" ry="9"/>
+          <path d="M3 9h18M3 15h18"/>
+        </svg>
+      </div>
+      <p class="serin-fact-title">Le SERIN en bref</p>
+      <ul class="serin-fact-list">
+        <li><strong>18 – 19 février 2027</strong><span>Deux journées de salon</span></li>
+        <li><strong>Haïti</strong><span>Lieu à confirmer prochainement</span></li>
+        <li><strong>3 axes stratégiques</strong><span>Économie · Relations Internationales · Numérique</span></li>
+        <li><strong>4 formats de participation</strong><span>Exposant, panéliste, partenaire, délégation</span></li>
+      </ul>
+      <div class="serin-motto-row">
+        <span>Innover</span><span>Connecter</span><span>Investir</span><span>Échanger</span><span>Construire</span>
+      </div>
+    </aside>
 
-    <div class="serin-edition-bar">Première Édition</div>
-    <div class="serin-dates">18 – 19 Février 2027</div>
-    <div class="serin-location">HAÏTI</div>
-
-    <div class="serin-tags">
-      <span>Innover</span><span>Connecter</span><span>Investir</span><span>Échanger</span><span>Construire</span>
-    </div>
-
-    <p class="serin-credit">Organisé par <strong>ADIS-HAITI</strong> — Réalisé par <strong>ORACLE Protocoles et Services</strong></p>
   </div>
 </section>
 
@@ -75,16 +90,19 @@
         <div class="serin-countdown-number"><span data-unit="days">00</span></div>
         <div class="serin-countdown-unit-label">Jours</div>
       </div>
+      <div class="serin-countdown-sep">:</div>
       <div class="serin-countdown-unit">
-        <div class="serin-countdown-number"><span class="accent" data-unit="hours">00</span></div>
+        <div class="serin-countdown-number"><span data-unit="hours">00</span></div>
         <div class="serin-countdown-unit-label">Heures</div>
       </div>
+      <div class="serin-countdown-sep">:</div>
       <div class="serin-countdown-unit">
         <div class="serin-countdown-number"><span data-unit="minutes">00</span></div>
         <div class="serin-countdown-unit-label">Minutes</div>
       </div>
+      <div class="serin-countdown-sep">:</div>
       <div class="serin-countdown-unit">
-        <div class="serin-countdown-number"><span class="accent" data-unit="seconds">00</span></div>
+        <div class="serin-countdown-number"><span data-unit="seconds">00</span></div>
         <div class="serin-countdown-unit-label">Secondes</div>
       </div>
     </div>
@@ -94,6 +112,61 @@
     <a href="#candidature" class="btn btn-serin-gold">Déposer ma candidature</a>
 
     <p class="serin-signature">« Des idées, des partenariats, des opportunités pour Haïti »</p>
+  </div>
+</section>
+
+<!-- ===== CHIFFRES CLÉS ===== -->
+<section class="serin-stats">
+  <div class="container serin-stats-grid">
+    <div class="serin-stat"><div class="serin-stat-number" data-count="2">0</div><div class="serin-stat-label">Jours de salon</div></div>
+    <div class="serin-stat"><div class="serin-stat-number" data-count="3">0</div><div class="serin-stat-label">Axes stratégiques</div></div>
+    <div class="serin-stat"><div class="serin-stat-number" data-count="4">0</div><div class="serin-stat-label">Formats de participation</div></div>
+    <div class="serin-stat"><div class="serin-stat-number-text">1ère</div><div class="serin-stat-label">Édition</div></div>
+  </div>
+</section>
+
+<!-- ===== AXES THÉMATIQUES ===== -->
+<section class="serin-axes" id="axes">
+  <div class="container">
+    <div class="section-head center reveal" style="max-width:640px;">
+      <span class="serin-eyebrow-dark">Programme</span>
+      <h2 style="color:var(--serin-navy);">Trois axes stratégiques</h2>
+      <p style="color:var(--ink-soft);">Le SERIN structure ses échanges, panels et espaces d'exposition autour de trois grandes thématiques.</p>
+    </div>
+    <div class="serin-axes-grid reveal">
+      <div class="serin-axe-card">
+        <div class="serin-axe-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#12285C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V10l5-5 5 5v11M10 21v-6h4v6"/></svg></div>
+        <h3>Économie</h3>
+        <p>Investissement, entrepreneuriat, développement économique et opportunités d'affaires en Haïti.</p>
+      </div>
+      <div class="serin-axe-card">
+        <div class="serin-axe-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#12285C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18"/></svg></div>
+        <h3>Relations Internationales</h3>
+        <p>Diplomatie, coopération bilatérale et multilatérale, partenariats internationaux.</p>
+      </div>
+      <div class="serin-axe-card">
+        <div class="serin-axe-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#12285C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></div>
+        <h3>Numérique</h3>
+        <p>Transformation digitale, innovation technologique et économie numérique.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ORGANISATEURS ===== -->
+<section class="serin-organizers">
+  <div class="container">
+    <p class="serin-organizers-label">Un événement porté par</p>
+    <div class="serin-organizers-row">
+      <div class="serin-organizer">
+        <div class="serin-organizer-mark">A</div>
+        <div><strong>ADIS-HAITI</strong><span>Organisateur — Action Diplomatique et Sociale, Haïti</span></div>
+      </div>
+      <div class="serin-organizer">
+        <div class="serin-organizer-mark">O</div>
+        <div><strong>ORACLE Protocoles et Services</strong><span>Réalisation — Protocole officiel &amp; gestion cérémonielle</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
