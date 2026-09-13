@@ -211,6 +211,19 @@
   font-size: 1.05rem;
 }
 
+/* ===== A propos / Pourquoi ce projet ===== */
+.serin-about { background: var(--serin-white); padding: 96px 0 88px; }
+.serin-about-intro { max-width: 760px; margin: 0 auto 48px; text-align: center; }
+.serin-about-intro p.lead { color: var(--ink-soft); font-size: 1.08rem; line-height: 1.7; }
+.serin-about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 640px; margin: 36px auto 0; text-align: center; }
+.serin-about-stats .serin-stat-number { font-family: var(--font-display); color: var(--serin-gold); font-size: clamp(2rem, 4vw, 2.6rem); line-height: 1; }
+.serin-about-stats .serin-stat-label { font-family: var(--font-ui); font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px; }
+
+.serin-about-body { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+.serin-about-block h3 { color: var(--serin-navy); font-size: 1.3rem; margin-bottom: .55em; }
+.serin-about-block p { color: var(--ink-soft); font-size: .98rem; line-height: 1.75; margin: 0; }
+.serin-about-block p + p { margin-top: 1em; }
+
 /* ===== Chiffres cles ===== */
 .serin-stats { background: var(--serin-white); padding: 56px 0; border-bottom: 1px solid rgba(18,40,92,.08); }
 .serin-stats-grid {
