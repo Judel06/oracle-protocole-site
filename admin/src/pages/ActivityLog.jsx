@@ -12,6 +12,7 @@ const ACTION_LABELS = {
   notes_update: 'Notes internes modifiées',
   export_csv: 'Export CSV',
   parametres_update: 'Paramètres du site modifiés',
+  serin_statut_change: 'SERIN 2027 : changement de statut',
   user_invite: 'Utilisateur invité',
   user_revoke: 'Accès révoqué',
 };

@@ -133,7 +133,7 @@ export default function AdhesionDetail() {
 
   return (
     <>
-      <PageHeader title="Fiche candidature" actions={<button className="btn btn-outline no-print" onClick={() => window.print()}>Imprimer / Exporter PDF</button>} />
+      <PageHeader title="Fiche candidature" actions={<button className="btn btn-outline no-print" onClick={() => window.print()}>Télécharger en PDF</button>} />
       <div className="admin-content">
         <Link to="/adhesions" className="no-print" style={{ fontSize: '.86rem', color: 'var(--text-soft)', display: 'inline-block', marginBottom: 16 }}>← Retour aux candidatures d'adhésion</Link>
 

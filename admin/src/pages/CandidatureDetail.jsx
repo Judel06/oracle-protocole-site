@@ -103,7 +103,7 @@ export default function CandidatureDetail() {
 
   return (
     <>
-      <PageHeader title="Fiche candidat" />
+      <PageHeader title="Fiche candidat" actions={<button className="btn btn-outline no-print" onClick={() => window.print()}>Télécharger en PDF</button>} />
       <div className="admin-content">
         <Link to="/candidatures" style={{ fontSize: '.86rem', color: 'var(--text-soft)', display: 'inline-block', marginBottom: 16 }}>← Retour aux candidatures</Link>
 

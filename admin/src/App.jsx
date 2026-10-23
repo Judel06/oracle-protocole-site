@@ -9,6 +9,7 @@ import Members from './pages/Members';
 import Candidatures from './pages/Candidatures';
 import CandidatureDetail from './pages/CandidatureDetail';
 import MissionMatchTool from './pages/MissionMatchTool';
+import Serin2027 from './pages/Serin2027';
 import Adhesions from './pages/Adhesions';
 import AdhesionDetail from './pages/AdhesionDetail';
 import Users from './pages/Users';
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/candidatures" element={<Candidatures />} />
         <Route path="/candidatures/recherche-mission" element={<MissionMatchTool />} />
         <Route path="/candidatures/:id" element={<CandidatureDetail />} />
+        <Route path="/serin-2027" element={<Serin2027 />} />
         <Route path="/adhesions" element={<Adhesions />} />
         <Route path="/adhesions/:id" element={<AdhesionDetail />} />
         <Route path="/utilisateurs" element={<Users />} />

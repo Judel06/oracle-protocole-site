@@ -294,6 +294,11 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
   .detail-grid { grid-template-columns: 1fr !important; display: block !important; }
   .card { box-shadow: none !important; border: none !important; }
   a[href]::after { content: none !important; }
+  /* Panneau SERIN ouvert : on n'imprime que la fiche, pas la liste derriere. */
+  body:has(.drawer) .admin-content { display: none; }
+  .drawer-overlay, .drawer-foot, .drawer-head button, .drawer-preview-pdf { display: none !important; }
+  .drawer { position: static; width: auto; box-shadow: none; animation: none; }
+  .drawer-body { overflow: visible; }
 }
 
 /* ===== Responsive (tablette min.) ===== */
@@ -304,3 +309,38 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
   .detail-grid { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
 }
+
+/* ===== SERIN 2027 — gestion des dossiers ===== */
+.stat-card { text-align: left; cursor: pointer; font: inherit; transition: border-color .15s, box-shadow .15s; }
+.stat-card:hover { border-color: var(--gold-dark); }
+.stat-card.active { border-color: var(--gold-dark); box-shadow: 0 0 0 2px var(--gold); }
+.stat-card:focus-visible { outline: 2px solid var(--gold-dark); outline-offset: 2px; }
+.stat-card .badge { margin-top: 8px; }
+
+.batch-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  background: var(--navy); color: #fff; padding: 10px 16px; border-radius: var(--radius); margin-bottom: 14px;
+}
+.data-table input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--gold-dark); }
+
+.drawer-overlay { position: fixed; inset: 0; background: rgba(13,27,42,.45); z-index: 150; }
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 100%); z-index: 160;
+  background: var(--surface); box-shadow: -20px 0 50px rgba(0,0,0,.2);
+  display: flex; flex-direction: column; animation: drawer-in .2s ease;
+}
+@keyframes drawer-in { from { transform: translateX(24px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.drawer-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 22px 24px; border-bottom: 1px solid var(--border); }
+.drawer-head h2 { font-family: var(--font-serif); font-size: 1.35rem; color: var(--navy); margin-top: 4px; }
+.drawer-kicker { font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-dark); }
+.drawer-body { flex: 1; overflow-y: auto; padding: 22px 24px; }
+.drawer-status { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.drawer-foot { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; padding: 16px 24px; border-top: 1px solid var(--border); background: var(--bg); }
+.drawer-preview { display: block; width: 100%; max-height: 320px; object-fit: contain; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); }
+.drawer-preview-pdf { height: 320px; }
+
+.timeline { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--border); display: flex; flex-direction: column; gap: 16px; }
+.timeline li { position: relative; }
+.timeline li::before { content: ''; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); }
+.timeline-meta { font-size: .78rem; color: var(--text-soft); margin-top: 4px; }
+.timeline-motif { font-size: .86rem; margin-top: 4px; font-style: italic; }

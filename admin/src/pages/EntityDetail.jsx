@@ -73,7 +73,7 @@ export default function EntityDetail({ entityKey }) {
 
   return (
     <>
-      <PageHeader title={cfg.label} />
+      <PageHeader title={cfg.label} actions={<button className="btn btn-outline no-print" onClick={() => window.print()}>Télécharger en PDF</button>} />
       <div className="admin-content">
         <Link to={`/${cfg.route}`} style={{ fontSize: '.86rem', color: 'var(--text-soft)', display: 'inline-block', marginBottom: 16 }}>← Retour à {cfg.labelPlural.toLowerCase()}</Link>
 
