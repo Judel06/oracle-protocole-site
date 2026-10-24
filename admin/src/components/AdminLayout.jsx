@@ -1,22 +1,27 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import RoleBadge from './RoleBadge';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Dashboard', icon: 'M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z', end: true },
-  { to: '/devis', label: 'Devis', icon: 'M9 12h6M9 16h6M9 8h6M5 21V5a2 2 0 012-2h6l6 6v12a2 2 0 01-2 2H7a2 2 0 01-2-2z' },
-  { to: '/formations', label: 'Formations', icon: 'M22 10L12 5 2 10l10 5 10-5zM6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5' },
-  { to: '/messages', label: 'Messages', icon: 'M4 4h16v12H7l-3 3V4z' },
-  { to: '/membres', label: 'Membres Protocole', icon: 'M20 21v-2a4 4 0 00-3-3.87M14.5 3.13a4 4 0 010 7.75M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2M9.5 11a4 4 0 100-8 4 4 0 000 8z' },
-  { to: '/candidatures', label: 'Candidatures', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-5 9l2 2 4-4' },
-  { to: '/serin-2027', label: 'SERIN 2027', icon: 'M12 2l3 7h7l-5.5 4.5 2 7.5L12 17l-6.5 4 2-7.5L2 9h7z' },
-  { to: '/adhesions', label: 'Adhésions', icon: 'M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M11 3.13a4 4 0 010 7.75M21 21v-2a4 4 0 00-3-3.87M9 11a4 4 0 100-8 4 4 0 000 8z' },
-  { to: '/utilisateurs', label: 'Utilisateurs', icon: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75' },
-  { to: '/parametres', label: 'Paramètres', icon: 'M12 15a3 3 0 100-6 3 3 0 000 6z M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z' },
-  { to: '/journal', label: "Journal d'activité", icon: 'M12 8v4l3 3M12 21a9 9 0 100-18 9 9 0 000 18z' },
+  { to: '/devis', module: 'devis', label: 'Devis', icon: 'M9 12h6M9 16h6M9 8h6M5 21V5a2 2 0 012-2h6l6 6v12a2 2 0 01-2 2H7a2 2 0 01-2-2z' },
+  { to: '/formations', module: 'formations', label: 'Formations', icon: 'M22 10L12 5 2 10l10 5 10-5zM6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5' },
+  { to: '/messages', module: 'messages', label: 'Messages', icon: 'M4 4h16v12H7l-3 3V4z' },
+  { to: '/membres', module: 'membres', label: 'Membres Protocole', icon: 'M20 21v-2a4 4 0 00-3-3.87M14.5 3.13a4 4 0 010 7.75M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2M9.5 11a4 4 0 100-8 4 4 0 000 8z' },
+  { to: '/candidatures', module: 'candidatures', label: 'Candidatures', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-5 9l2 2 4-4' },
+  { to: '/serin-2027', module: 'candidatures', label: 'SERIN 2027', icon: 'M12 2l3 7h7l-5.5 4.5 2 7.5L12 17l-6.5 4 2-7.5L2 9h7z' },
+  { to: '/adhesions', module: 'adhesions', label: 'Adhésions', icon: 'M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M11 3.13a4 4 0 010 7.75M21 21v-2a4 4 0 00-3-3.87M9 11a4 4 0 100-8 4 4 0 000 8z' },
+  { to: '/utilisateurs', module: 'utilisateurs', label: 'Utilisateurs', icon: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75' },
+  { to: '/parametres', module: 'parametres', label: 'Paramètres', icon: 'M12 15a3 3 0 100-6 3 3 0 000 6z M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z' },
+  { to: '/roles', label: 'Rôles et permissions', dg: true, icon: 'M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4zM9 12l2 2 4-4' },
+  { to: '/validations', label: 'Validations', dg: true, icon: 'M5 13l4 4L19 7' },
+  { to: '/journal', module: 'journal', label: "Journal d'activité", icon: 'M12 8v4l3 3M12 21a9 9 0 100-18 9 9 0 000 18z' },
 ];
 
 export default function AdminLayout() {
-  const { adminProfile, signOut } = useAuth();
+  const { adminProfile, signOut, can, isDG, roleKeys, roleCatalog } = useAuth();
+  const visibleNav = NAV_ITEMS.filter((item) => (item.dg ? isDG : !item.module || can(item.module, 'voir')));
+  const myRoles = roleKeys.map((k) => roleCatalog.find((r) => r.key === k) || { key: k, label: k, color: 'navy' });
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -36,7 +41,7 @@ export default function AdminLayout() {
         </div>
 
         <nav className="admin-nav">
-          {NAV_ITEMS.map((item) => (
+          {visibleNav.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -54,7 +59,7 @@ export default function AdminLayout() {
         <div className="admin-sidebar-footer">
           <div className="admin-user-chip">
             <strong>{adminProfile?.email}</strong>
-            {adminProfile?.role === 'admin' ? 'Administrateur' : 'Éditeur'}
+            <div>{myRoles.map((r) => <RoleBadge key={r.key} role={r} />)}</div>
           </div>
           <button className="admin-nav-link" style={{ width: '100%', background: 'none', border: 'none' }} onClick={handleSignOut}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

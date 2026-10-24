@@ -8,6 +8,7 @@ import { STATUT_CANDIDAT_LABELS, STATUT_CANDIDAT_COLORS } from '../config/candid
 import { exportToCsv } from '../utils/csvExport';
 import { logActivity } from '../utils/logActivity';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 import { formatDate } from '../utils/format';
 
 const PAGE_SIZE = 20;
@@ -32,6 +33,7 @@ const CSV_COLUMNS = [
 ];
 
 export default function Candidatures() {
+  const { can } = useAuth();
   const navigate = useNavigate();
   const { showToast } = useToast();
   const [rows, setRows] = useState([]);
@@ -89,7 +91,7 @@ export default function Candidatures() {
         actions={
           <>
             <Link to="/candidatures/recherche-mission" className="btn btn-navy">Trouver des membres pour une mission</Link>
-            <button className="btn btn-outline" onClick={handleExport} disabled={exporting}>{exporting ? 'Export…' : 'Exporter en CSV'}</button>
+            {can('candidatures', 'exporter') && <button className="btn btn-outline" onClick={handleExport} disabled={exporting}>{exporting ? 'Export…' : 'Exporter en CSV'}</button>}
           </>
         }
       />

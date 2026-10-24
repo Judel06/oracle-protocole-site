@@ -10,6 +10,7 @@ import {
 import { formatDate, formatDateTime } from '../utils/format';
 import { logActivity } from '../utils/logActivity';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 
 function initials(nom) {
   if (!nom) return '?';
@@ -17,6 +18,7 @@ function initials(nom) {
 }
 
 export default function AdhesionDetail() {
+  const { can } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -213,9 +215,9 @@ export default function AdhesionDetail() {
             <div className="card card-pad">
               <div className="section-title">Actions</div>
 
-              {!decisionTaken && (
+              {!decisionTaken && can('adhesions', 'valider') && (
                 <>
-                  {row.statut === 'nouvelle' && (
+                  {row.statut === 'nouvelle' && can('adhesions', 'modifier') && (
                     <button className="btn btn-outline btn-block" style={{ marginBottom: 12 }} onClick={markEnCoursExamen}>
                       Marquer en cours d'examen
                     </button>
@@ -261,14 +263,14 @@ export default function AdhesionDetail() {
                   {row.membre_protocole_id ? (
                     <p className="field-hint" style={{ marginTop: 0 }}>✓ Déjà ajouté à l'annuaire des membres du protocole.</p>
                   ) : (
-                    <button className="btn btn-primary btn-block" disabled={addingToRoster} onClick={addToRoster}>
+                    <button className="btn btn-primary btn-block" disabled={addingToRoster || !can('membres', 'creer')} onClick={addToRoster}>
                       {addingToRoster ? 'Ajout…' : "Ajouter à l'annuaire des membres"}
                     </button>
                   )}
                 </div>
               )}
 
-              {decisionTaken && (
+              {decisionTaken && can('adhesions', 'valider') && (
                 <button
                   className="btn btn-outline btn-block"
                   style={{ marginTop: 14 }}

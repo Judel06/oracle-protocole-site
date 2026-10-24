@@ -344,3 +344,26 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
 .timeline li::before { content: ''; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); }
 .timeline-meta { font-size: .78rem; color: var(--text-soft); margin-top: 4px; }
 .timeline-motif { font-size: .86rem; margin-top: 4px; font-style: italic; }
+
+/* ---- Roles et permissions ---- */
+.role-badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .74rem; font-weight: 700; margin: 0 6px 4px 0; }
+.role-navy { background: var(--navy-soft); color: var(--navy); }
+.role-gold { background: #F6EBC8; color: var(--gold-dark); }
+.role-teal { background: #DDF3F1; color: #1C7C74; }
+.role-purple { background: #ECE6F7; color: #5B3FA0; }
+.role-green { background: var(--green-soft); color: var(--green); }
+.role-red { background: var(--red-soft); color: var(--red); }
+.role-orange { background: #FDEBD8; color: #B35C0E; }
+.role-blue { background: #DFEBFB; color: #2458A6; }
+.admin-user-chip .role-badge { margin-top: 6px; }
+.perm-matrix { width: 100%; border-collapse: collapse; background: var(--surface); }
+.perm-matrix th, .perm-matrix td { padding: 10px 12px; text-align: center; border-bottom: 1px solid var(--border); font-size: .86rem; }
+.perm-matrix th:first-child, .perm-matrix td:first-child { text-align: left; font-weight: 600; }
+.perm-matrix thead th { background: var(--navy-soft); color: var(--navy); font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; }
+.perm-matrix input[type=checkbox] { width: 17px; height: 17px; accent-color: var(--gold-dark); }
+.perm-matrix input:disabled { opacity: .45; }
+.role-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.role-tab { border: 1.5px solid var(--border); background: var(--surface); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: .84rem; font-weight: 600; color: var(--text); }
+.role-tab.active { border-color: var(--gold); box-shadow: 0 0 0 2px #F6EBC8; }
+.role-check-list { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-bottom: 14px; }
+.role-check-list label { display: flex; align-items: center; gap: 6px; font-size: .86rem; }

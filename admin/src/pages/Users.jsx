@@ -5,6 +5,9 @@ import { useToast } from '../context/ToastContext';
 import PageHeader from '../components/PageHeader';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ConfirmDialog from '../components/ConfirmDialog';
+import RoleBadge from '../components/RoleBadge';
+import { DG } from '../config/permissions';
+import { logActivity } from '../utils/logActivity';
 import { formatDate } from '../utils/format';
 
 async function callEdgeFunction(name, payload) {
@@ -24,13 +27,15 @@ async function callEdgeFunction(name, payload) {
 }
 
 export default function Users() {
-  const { adminProfile } = useAuth();
+  const { adminProfile, roleCatalog, reloadProfile } = useAuth();
+  const [editTarget, setEditTarget] = useState(null); // { user, roles }
+  const [savingRoles, setSavingRoles] = useState(false);
+  const [inviteRoles, setInviteRoles] = useState([]);
   const { showToast } = useToast();
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [inviteEmail, setInviteEmail] = useState('');
-  const [inviteRole, setInviteRole] = useState('admin');
   const [inviting, setInviting] = useState(false);
   const [inviteError, setInviteError] = useState('');
   const [revokeTarget, setRevokeTarget] = useState(null);
@@ -50,7 +55,14 @@ export default function Users() {
     setInviteError('');
     setInviting(true);
     try {
-      await callEdgeFunction('admin-invite-user', { email: inviteEmail.trim(), role: inviteRole });
+      if (!inviteRoles.length) throw new Error('Choisissez au moins un rôle.');
+      const email = inviteEmail.trim();
+      // La fonction d'invitation ne connait que admin/editor (colonne historique) ; les vrais roles sont poses ensuite.
+      await callEdgeFunction('admin-invite-user', { email, role: inviteRoles.includes(DG) ? 'admin' : 'editor' });
+      const { error: roleErr } = await supabase.from('admin_users').update({ roles: inviteRoles }).eq('email', email);
+      if (roleErr) throw roleErr;
+      await logActivity('user_invite', { module: 'utilisateurs', email, roles: inviteRoles.join(', ') });
+      setInviteRoles([]);
       showToast(`Invitation envoyée à ${inviteEmail.trim()}.`);
       setInviteEmail('');
       await load();
@@ -60,6 +72,31 @@ export default function Users() {
       setInviting(false);
     }
   };
+
+  const saveRoles = async () => {
+    setSavingRoles(true);
+    const { user, roles } = editTarget;
+    const { error } = await supabase.from('admin_users').update({ roles, role: roles.includes(DG) ? 'admin' : 'editor' }).eq('id', user.id);
+    setSavingRoles(false);
+    if (error) { showToast(error.message, 'error'); return; }
+    await logActivity('user_roles_update', { module: 'utilisateurs', email: user.email, roles: roles.join(', ') });
+    showToast('Rôles mis à jour.');
+    setEditTarget(null);
+    await load();
+    await reloadProfile();
+  };
+
+  const toggleRole = (list, key) => (list.includes(key) ? list.filter((k) => k !== key) : [...list, key]);
+  const roleChecks = (list, onChange) => (
+    <div className="role-check-list">
+      {roleCatalog.map((r) => (
+        <label key={r.key}>
+          <input type="checkbox" checked={list.includes(r.key)} onChange={() => onChange(toggleRole(list, r.key))} />
+          <RoleBadge role={r} />
+        </label>
+      ))}
+    </div>
+  );
 
   const handleRevoke = async () => {
     setRevoking(true);
@@ -89,14 +126,9 @@ export default function Users() {
                 <label>Email</label>
                 <input type="email" required value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} />
               </div>
-              <div className="field">
-                <label>Rôle</label>
-                <select value={inviteRole} onChange={(e) => setInviteRole(e.target.value)}>
-                  <option value="admin">Administrateur</option>
-                  <option value="editor">Éditeur</option>
-                </select>
-              </div>
             </div>
+            <label style={{ fontSize: '.84rem', fontWeight: 600 }}>Rôles (les permissions s'additionnent)</label>
+            {roleChecks(inviteRoles, setInviteRoles)}
             <button type="submit" className="btn btn-primary" disabled={inviting}>
               {inviting ? 'Envoi…' : "Envoyer l'invitation"}
             </button>
@@ -107,15 +139,23 @@ export default function Users() {
         {loading ? <LoadingSpinner /> : (
           <div className="table-wrap">
             <table className="data-table">
-              <thead><tr><th>Email</th><th>Rôle</th><th>Statut</th><th>Ajouté le</th><th></th></tr></thead>
+              <thead><tr><th>Email</th><th>Rôles</th><th>Statut</th><th>Ajouté le</th><th></th></tr></thead>
               <tbody>
                 {users.map((u) => (
                   <tr key={u.id} style={{ cursor: 'default' }}>
                     <td>{u.email}</td>
-                    <td style={{ textTransform: 'capitalize' }}>{u.role === 'admin' ? 'Administrateur' : 'Éditeur'}</td>
+                    <td>
+                      {(u.roles?.length ? u.roles : [u.role === 'admin' ? DG : 'communication']).map((k) => (
+                        <RoleBadge key={k} role={roleCatalog.find((r) => r.key === k) || { label: k }} />
+                      ))}
+                      {!u.roles?.length && <span className="field-hint"> (à attribuer)</span>}
+                    </td>
                     <td><span className={`badge ${u.active ? 'badge-green' : 'badge-red'}`}>{u.active ? 'Actif' : 'Révoqué'}</span></td>
                     <td>{formatDate(u.created_at)}</td>
                     <td>
+                      {u.id !== adminProfile?.id && (
+                        <button className="btn btn-outline btn-sm" style={{ marginRight: 6 }} onClick={() => setEditTarget({ user: u, roles: u.roles || [] })}>Rôles</button>
+                      )}
                       {u.active && u.id !== adminProfile?.id && (
                         <button className="btn btn-danger btn-sm" onClick={() => setRevokeTarget(u)}>Révoquer</button>
                       )}
@@ -130,6 +170,19 @@ export default function Users() {
         )}
 
       </div>
+
+      {editTarget && (
+        <div className="modal-overlay" onClick={() => setEditTarget(null)}>
+          <div className="modal-card" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+            <h3>Rôles de {editTarget.user.email}</h3>
+            {roleChecks(editTarget.roles, (roles) => setEditTarget({ ...editTarget, roles }))}
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <button className="btn btn-outline" onClick={() => setEditTarget(null)}>Annuler</button>
+              <button className="btn btn-primary" onClick={saveRoles} disabled={savingRoles}>{savingRoles ? 'Enregistrement…' : 'Enregistrer'}</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <ConfirmDialog
         open={Boolean(revokeTarget)}

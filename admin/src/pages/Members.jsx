@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 import { logActivity } from '../utils/logActivity';
 import PageHeader from '../components/PageHeader';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -19,6 +20,7 @@ const EMPTY_FORM = { nom_complet: '', niveau_accreditation: 'niveau_2', affectat
  * evenement, gere dans le module Presence du Dashboard.
  */
 export default function Members() {
+  const { can } = useAuth();
   const { showToast } = useToast();
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,7 +76,7 @@ export default function Members() {
     <>
       <PageHeader
         title="Membres du Protocole"
-        actions={<button className="btn btn-primary" onClick={() => setShowForm((v) => !v)}>+ Ajouter un membre</button>}
+        actions={can('membres', 'creer') && <button className="btn btn-primary" onClick={() => setShowForm((v) => !v)}>+ Ajouter un membre</button>}
       />
       <div className="admin-content">
 
@@ -139,7 +141,7 @@ export default function Members() {
                     <td style={{ fontSize: '.82rem', color: 'var(--text-soft)' }}>{[m.telephone, m.email].filter(Boolean).join(' · ') || '—'}</td>
                     <td><span className={`badge ${m.statut === 'actif' ? 'badge-green' : 'badge-gray'}`}>{m.statut === 'actif' ? 'Actif' : 'Inactif'}</span></td>
                     <td>
-                      <button className="btn btn-outline btn-sm" disabled={togglingId === m.id} onClick={() => toggleStatut(m)}>
+                      <button className="btn btn-outline btn-sm" disabled={togglingId === m.id || !can('membres', 'modifier')} onClick={() => toggleStatut(m)}>
                         {m.statut === 'actif' ? 'Désactiver' : 'Réactiver'}
                       </button>
                     </td>

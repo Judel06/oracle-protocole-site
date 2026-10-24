@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 import { logActivity } from '../utils/logActivity';
 import { exportToCsv } from '../utils/csvExport';
 import { formatDate, formatDateTime } from '../utils/format';
@@ -51,6 +52,7 @@ const CSV_COLUMNS = [
 ];
 
 export default function Serin2027() {
+  const { can } = useAuth();
   const { showToast } = useToast();
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(0);
@@ -184,7 +186,7 @@ export default function Serin2027() {
               <option value="nom">Nom A-Z</option>
             </select>
           </div>
-          <button className="btn btn-outline" onClick={exportCsv} disabled={total === 0}>Exporter en CSV</button>
+          {can('candidatures', 'exporter') && <button className="btn btn-outline" onClick={exportCsv} disabled={total === 0}>Exporter en CSV</button>}
         </div>
 
         {selected.size > 0 && (
@@ -192,8 +194,8 @@ export default function Serin2027() {
             <strong>{selected.size} sélectionné{selected.size > 1 ? 's' : ''}</strong>
             <div style={{ display: 'flex', gap: 8 }}>
               <button className="btn btn-outline btn-sm" onClick={() => setSelected(new Set())}>Annuler</button>
-              <button className="btn btn-danger btn-sm" onClick={() => setBatch('rejete')}>Rejeter</button>
-              <button className="btn btn-primary btn-sm" onClick={() => setBatch('approuve')}>Approuver</button>
+              {can('candidatures', 'valider') && <><button className="btn btn-danger btn-sm" onClick={() => setBatch('rejete')}>Rejeter</button>
+              <button className="btn btn-primary btn-sm" onClick={() => setBatch('approuve')}>Approuver</button></>}
             </div>
           </div>
         )}

@@ -16,7 +16,9 @@ import Users from './pages/Users';
 import Settings from './pages/Settings';
 import ActivityLog from './pages/ActivityLog';
 import AdminLayout from './components/AdminLayout';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute, { RequirePerm, RequireDG } from './components/ProtectedRoute';
+import Roles from './pages/Roles';
+import Validations from './pages/Validations';
 
 export default function App() {
   return (
@@ -33,22 +35,24 @@ export default function App() {
         }
       >
         <Route path="/" element={<Dashboard />} />
-        <Route path="/devis" element={<EntityList entityKey="devis" />} />
-        <Route path="/devis/:id" element={<EntityDetail entityKey="devis" />} />
-        <Route path="/formations" element={<EntityList entityKey="formations" />} />
-        <Route path="/formations/:id" element={<EntityDetail entityKey="formations" />} />
-        <Route path="/messages" element={<EntityList entityKey="messages" />} />
-        <Route path="/messages/:id" element={<EntityDetail entityKey="messages" />} />
-        <Route path="/membres" element={<Members />} />
-        <Route path="/candidatures" element={<Candidatures />} />
-        <Route path="/candidatures/recherche-mission" element={<MissionMatchTool />} />
-        <Route path="/candidatures/:id" element={<CandidatureDetail />} />
-        <Route path="/serin-2027" element={<Serin2027 />} />
-        <Route path="/adhesions" element={<Adhesions />} />
-        <Route path="/adhesions/:id" element={<AdhesionDetail />} />
-        <Route path="/utilisateurs" element={<Users />} />
-        <Route path="/parametres" element={<Settings />} />
-        <Route path="/journal" element={<ActivityLog />} />
+        <Route path="/devis" element={<RequirePerm module="devis"><EntityList entityKey="devis" /></RequirePerm>} />
+        <Route path="/devis/:id" element={<RequirePerm module="devis"><EntityDetail entityKey="devis" /></RequirePerm>} />
+        <Route path="/formations" element={<RequirePerm module="formations"><EntityList entityKey="formations" /></RequirePerm>} />
+        <Route path="/formations/:id" element={<RequirePerm module="formations"><EntityDetail entityKey="formations" /></RequirePerm>} />
+        <Route path="/messages" element={<RequirePerm module="messages"><EntityList entityKey="messages" /></RequirePerm>} />
+        <Route path="/messages/:id" element={<RequirePerm module="messages"><EntityDetail entityKey="messages" /></RequirePerm>} />
+        <Route path="/membres" element={<RequirePerm module="membres"><Members /></RequirePerm>} />
+        <Route path="/candidatures" element={<RequirePerm module="candidatures"><Candidatures /></RequirePerm>} />
+        <Route path="/candidatures/recherche-mission" element={<RequirePerm module="candidatures"><MissionMatchTool /></RequirePerm>} />
+        <Route path="/candidatures/:id" element={<RequirePerm module="candidatures"><CandidatureDetail /></RequirePerm>} />
+        <Route path="/serin-2027" element={<RequirePerm module="candidatures"><Serin2027 /></RequirePerm>} />
+        <Route path="/adhesions" element={<RequirePerm module="adhesions"><Adhesions /></RequirePerm>} />
+        <Route path="/adhesions/:id" element={<RequirePerm module="adhesions"><AdhesionDetail /></RequirePerm>} />
+        <Route path="/utilisateurs" element={<RequirePerm module="utilisateurs"><Users /></RequirePerm>} />
+        <Route path="/parametres" element={<RequirePerm module="parametres"><Settings /></RequirePerm>} />
+        <Route path="/roles" element={<RequireDG><Roles /></RequireDG>} />
+        <Route path="/validations" element={<RequireDG><Validations /></RequireDG>} />
+        <Route path="/journal" element={<RequirePerm module="journal"><ActivityLog /></RequirePerm>} />
       </Route>
     </Routes>
   );

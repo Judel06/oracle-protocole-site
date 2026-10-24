@@ -8,6 +8,7 @@ import { ENTITIES } from '../config/entities';
 import { exportToCsv } from '../utils/csvExport';
 import { logActivity } from '../utils/logActivity';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 
 const PAGE_SIZE = 20;
 
@@ -19,6 +20,8 @@ export default function EntityList({ entityKey }) {
   const cfg = ENTITIES[entityKey];
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { can } = useAuth();
+  const [showArchived, setShowArchived] = useState(false);
 
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(0);
@@ -33,6 +36,7 @@ export default function EntityList({ entityKey }) {
   const fetchRows = useCallback(async () => {
     setLoading(true);
     let query = supabase.from(cfg.table).select('*', { count: 'exact' });
+    query = showArchived ? query.not('archived_at', 'is', null) : query.is('archived_at', null);
 
     if (search.trim()) {
       const like = `%${search.trim()}%`;
@@ -55,10 +59,10 @@ export default function EntityList({ entityKey }) {
       setTotal(count || 0);
     }
     setLoading(false);
-  }, [cfg.table, cfg.searchFields, search, filters, sortKey, sortDir, page]);
+  }, [cfg.table, cfg.searchFields, search, filters, sortKey, sortDir, page, showArchived]);
 
   useEffect(() => { fetchRows(); }, [fetchRows]);
-  useEffect(() => { setPage(1); }, [search, filters, entityKey]);
+  useEffect(() => { setPage(1); }, [search, filters, entityKey, showArchived]);
 
   const handleSort = (key) => {
     if (sortKey === key) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
@@ -69,6 +73,7 @@ export default function EntityList({ entityKey }) {
     setExporting(true);
     try {
       let query = supabase.from(cfg.table).select('*');
+      query = showArchived ? query.not('archived_at', 'is', null) : query.is('archived_at', null);
       if (search.trim()) {
         const like = `%${search.trim()}%`;
         query = query.or(cfg.searchFields.map((f) => `${f}.ilike.${like}`).join(','));
@@ -98,7 +103,7 @@ export default function EntityList({ entityKey }) {
     <>
       <PageHeader
         title={cfg.labelPlural}
-        actions={<button className="btn btn-outline" onClick={handleExport} disabled={exporting}>{exporting ? 'Export…' : 'Exporter en CSV'}</button>}
+        actions={can(entityKey, 'exporter') && <button className="btn btn-outline" onClick={handleExport} disabled={exporting}>{exporting ? 'Export…' : 'Exporter en CSV'}</button>}
       />
       <div className="admin-content">
 
@@ -121,6 +126,13 @@ export default function EntityList({ entityKey }) {
               </select>
             </div>
           ))}
+          <div className="filter-field">
+            <label>Archives</label>
+            <select value={showArchived ? '1' : ''} onChange={(e) => setShowArchived(Boolean(e.target.value))}>
+              <option value="">Actifs</option>
+              <option value="1">Archivés</option>
+            </select>
+          </div>
           <div className="filter-field">
             <label>Depuis le</label>
             <input type="date" value={filters.periode_debut || ''} onChange={(e) => setFilters((prev) => ({ ...prev, periode_debut: e.target.value }))} />

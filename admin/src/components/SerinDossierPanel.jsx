@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 import { logActivity } from '../utils/logActivity';
 import { formatDateTime } from '../utils/format';
 import LoadingSpinner from './LoadingSpinner';
@@ -23,6 +24,7 @@ function Row({ k, v }) {
 
 /** Panneau lateral : fiche complete, pieces jointes, historique, notes et decision. */
 export default function SerinDossierPanel({ id, onClose, onChanged }) {
+  const { can } = useAuth();
   const { showToast } = useToast();
   const [row, setRow] = useState(null);
   const [history, setHistory] = useState([]);
@@ -179,9 +181,10 @@ export default function SerinDossierPanel({ id, onClose, onChanged }) {
         {row && (
           <div className="drawer-foot">
             <button className="btn btn-outline" onClick={exportPdf}>Télécharger en PDF</button>
+            {can('candidatures', 'valider') && <>
             <button className="btn btn-outline" disabled={row.statut === 'en_attente'} onClick={() => changeStatut('en_attente', null)}>Mettre en attente</button>
             <button className="btn btn-danger" disabled={row.statut === 'rejete'} onClick={() => setDecision('rejete')}>Rejeter</button>
-            <button className="btn btn-primary" disabled={row.statut === 'approuve'} onClick={() => setDecision('approuve')}>Approuver</button>
+            <button className="btn btn-primary" disabled={row.statut === 'approuve'} onClick={() => setDecision('approuve')}>Approuver</button></>}
           </div>
         )}
       </aside>

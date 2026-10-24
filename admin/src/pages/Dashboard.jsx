@@ -9,6 +9,8 @@ import ApprovalModule from '../components/ApprovalModule';
 import { ENTITIES, STATUT_LABELS } from '../config/entities';
 import { formatRelative } from '../utils/format';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
+import DgPanel from '../components/DgPanel';
 
 const THIRTY_DAYS_AGO = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 const DOSSIER_COMPLET_URL = 'https://oracleprotocole.com/dossierscomplets';
@@ -47,6 +49,8 @@ function ShareDossierLink() {
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const { can, isDG } = useAuth();
+  const entityKeys = Object.keys(ENTITIES).filter((k) => can(k, 'voir'));
   const [loading, setLoading] = useState(true);
   const [kpis, setKpis] = useState(null);
   const [statutBreakdown, setStatutBreakdown] = useState({});
@@ -58,7 +62,6 @@ export default function Dashboard() {
     async function load() {
       setLoading(true);
 
-      const entityKeys = Object.keys(ENTITIES);
       const results = await Promise.all(
         entityKeys.map(async (key) => {
           const table = ENTITIES[key].table;
@@ -121,7 +124,7 @@ export default function Dashboard() {
       <div className="admin-content">
 
         <div className="kpi-grid">
-          {Object.entries(ENTITIES).map(([key, cfg]) => (
+          {Object.entries(ENTITIES).filter(([key]) => kpis[key]).map(([key, cfg]) => (
             <div key={key} className="kpi-card">
               <div className="kpi-label">{cfg.labelPlural}</div>
               <div className="kpi-value">{kpis[key].total}</div>
@@ -130,17 +133,19 @@ export default function Dashboard() {
           ))}
         </div>
 
-        <ShareDossierLink />
+        {isDG && <DgPanel />}
+
+        {can('candidatures', 'voir') && <ShareDossierLink />}
 
         <div className="modules-grid">
-          <PresenceModule />
-          <ApprovalModule />
+          {can('membres', 'voir') && <PresenceModule />}
+          {can('devis', 'valider') && <ApprovalModule />}
         </div>
 
         <div className="card card-pad" style={{ marginBottom: 24 }}>
           <div className="section-title">Répartition par statut</div>
           <div className="statut-breakdown-grid">
-            {Object.entries(ENTITIES).map(([key, cfg]) => (
+            {Object.entries(ENTITIES).filter(([key]) => statutBreakdown[key]).map(([key, cfg]) => (
               <div key={key}>
                 <div style={{ fontSize: '.82rem', fontWeight: 700, color: 'var(--text-soft)', marginBottom: 8 }}>{cfg.labelPlural}</div>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>

@@ -7,6 +7,7 @@ import { STATUT_CANDIDAT_LABELS } from '../config/candidatsLabels';
 import { formatDate, formatDateTime } from '../utils/format';
 import { logActivity } from '../utils/logActivity';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 
 const DOC_TYPE_LABELS = {
   cv: 'CV', photo_portrait: 'Photo portrait', photo_pied: 'Photo pied',
@@ -17,6 +18,7 @@ const yn = (v) => v === true ? 'Oui' : v === false ? 'Non' : '—';
 const listOrDash = (arr, fmt = (x) => x) => Array.isArray(arr) && arr.length ? arr.map(fmt).join(', ') : '—';
 
 export default function CandidatureDetail() {
+  const { can } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -116,7 +118,7 @@ export default function CandidatureDetail() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {savingStatus && <span className="spinner" style={{ width: 16, height: 16, borderWidth: 2 }} />}
-            <select className="status-select" value={row.statut || ''} onChange={(e) => handleStatusChange(e.target.value)} disabled={savingStatus}>
+            <select className="status-select" value={row.statut || ''} onChange={(e) => handleStatusChange(e.target.value)} disabled={savingStatus || !can('candidatures', 'modifier')}>
               {Object.entries(STATUT_CANDIDAT_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
           </div>
@@ -345,7 +347,7 @@ export default function CandidatureDetail() {
                 placeholder="ex. Junior, Confirmé, Senior…"
                 style={{ width: '100%', padding: 10, border: '1.5px solid var(--border)', borderRadius: 8, marginBottom: 10 }}
               />
-              <button className="btn btn-outline btn-sm" onClick={handleSaveNiveau} disabled={savingNiveau}>
+              <button className="btn btn-outline btn-sm" onClick={handleSaveNiveau} disabled={savingNiveau || !can('candidatures', 'modifier')}>
                 {savingNiveau ? 'Enregistrement…' : 'Enregistrer le niveau'}
               </button>
             </div>
@@ -360,7 +362,7 @@ export default function CandidatureDetail() {
                 placeholder="Ajoutez une note de suivi…"
                 style={{ width: '100%', padding: 12, border: '1.5px solid var(--border)', borderRadius: 8, marginBottom: 12, resize: 'vertical' }}
               />
-              <button className="btn btn-primary" onClick={handleSaveNotes} disabled={savingNotes}>
+              <button className="btn btn-primary" onClick={handleSaveNotes} disabled={savingNotes || !can('candidatures', 'modifier')}>
                 {savingNotes ? 'Enregistrement…' : 'Enregistrer les notes'}
               </button>
             </div>

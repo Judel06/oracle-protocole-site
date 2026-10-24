@@ -8,12 +8,17 @@ import { ENTITIES, STATUT_LABELS } from '../config/entities';
 import { formatDate, formatDateTime } from '../utils/format';
 import { logActivity } from '../utils/logActivity';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 export default function EntityDetail({ entityKey }) {
   const { id } = useParams();
   const cfg = ENTITIES[entityKey];
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { can, isDG } = useAuth();
+  const canEdit = can(entityKey, 'modifier');
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const [row, setRow] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -65,6 +70,21 @@ export default function EntityDetail({ entityKey }) {
     showToast('Notes internes enregistrées.');
   };
 
+  const handleArchive = async (restore) => {
+    const { error } = await supabase.from(cfg.table).update({ archived_at: restore ? null : new Date().toISOString() }).eq('id', id);
+    if (error) { showToast("L'opération a échoué.", 'error'); return; }
+    await logActivity(restore ? 'restauration' : 'archivage', { module: entityKey, table: cfg.table, record_id: id });
+    setRow((r) => ({ ...r, archived_at: restore ? null : new Date().toISOString() }));
+    showToast(restore ? 'Enregistrement restauré.' : 'Enregistrement archivé (réversible).');
+  };
+
+  const handleDeleteForever = async () => {
+    const { error } = await supabase.from(cfg.table).delete().eq('id', id);
+    if (error) { showToast(error.message, 'error'); return; }
+    await logActivity('suppression_definitive', { module: entityKey, table: cfg.table, record_id: id });
+    navigate(`/${cfg.route}`);
+  };
+
   if (!cfg) return <div className="admin-content">Section inconnue.</div>;
   if (loading) return (<><PageHeader title={cfg.label} /><div className="admin-content"><LoadingSpinner /></div></>);
   if (!row) return (<><PageHeader title={cfg.label} /><div className="admin-content">Introuvable. <Link to={`/${cfg.route}`}>← Retour à la liste</Link></div></>);
@@ -73,7 +93,15 @@ export default function EntityDetail({ entityKey }) {
 
   return (
     <>
-      <PageHeader title={cfg.label} actions={<button className="btn btn-outline no-print" onClick={() => window.print()}>Télécharger en PDF</button>} />
+      <PageHeader title={cfg.label} actions={
+        <div className="no-print" style={{ display: 'flex', gap: 8 }}>
+          <button className="btn btn-outline" onClick={() => window.print()}>Télécharger en PDF</button>
+          {can(entityKey, 'supprimer') && (row.archived_at
+            ? <button className="btn btn-outline" onClick={() => handleArchive(true)}>Restaurer</button>
+            : <button className="btn btn-danger" onClick={() => handleArchive(false)}>Archiver</button>)}
+          {isDG && <button className="btn btn-danger" onClick={() => setConfirmDelete(true)}>Supprimer définitivement</button>}
+        </div>
+      } />
       <div className="admin-content">
         <Link to={`/${cfg.route}`} style={{ fontSize: '.86rem', color: 'var(--text-soft)', display: 'inline-block', marginBottom: 16 }}>← Retour à {cfg.labelPlural.toLowerCase()}</Link>
 
@@ -88,7 +116,7 @@ export default function EntityDetail({ entityKey }) {
               className="status-select"
               value={row.statut}
               onChange={(e) => handleStatusChange(e.target.value)}
-              disabled={savingStatus}
+              disabled={savingStatus || !canEdit}
             >
               {cfg.statutOptions.map((s) => <option key={s} value={s}>{STATUT_LABELS[s]}</option>)}
             </select>
@@ -138,16 +166,26 @@ export default function EntityDetail({ entityKey }) {
                 rows={8}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
+                disabled={!canEdit}
                 placeholder="Ajoutez une note de suivi…"
                 style={{ width: '100%', padding: 12, border: '1.5px solid var(--border)', borderRadius: 8, marginBottom: 12, resize: 'vertical' }}
               />
-              <button className="btn btn-primary" onClick={handleSaveNotes} disabled={savingNotes}>
+              <button className="btn btn-primary" onClick={handleSaveNotes} disabled={savingNotes || !canEdit}>
                 {savingNotes ? 'Enregistrement…' : 'Enregistrer les notes'}
               </button>
             </div>
           </div>
         </div>
       </div>
+      <ConfirmDialog
+        open={confirmDelete}
+        title="Supprimer définitivement ?"
+        message="Cet enregistrement sera effacé sans possibilité de retour. Préférez l'archivage si vous hésitez."
+        confirmLabel="Supprimer définitivement"
+        danger
+        onConfirm={handleDeleteForever}
+        onCancel={() => setConfirmDelete(false)}
+      />
     </>
   );
 }

@@ -15,11 +15,24 @@ const ACTION_LABELS = {
   serin_statut_change: 'SERIN 2027 : changement de statut',
   user_invite: 'Utilisateur invité',
   user_revoke: 'Accès révoqué',
+  user_roles_update: 'Rôles utilisateur modifiés',
+  role_permissions_update: 'Permissions de rôle modifiées',
+  role_cree: 'Rôle créé',
+  role_supprime: 'Rôle supprimé',
+  delegation_creee: 'Délégation créée',
+  delegation_revoquee: 'Délégation révoquée',
+  validation_approuve: 'Validation approuvée',
+  validation_rejete: 'Validation rejetée',
+  validation_annule: 'Décision annulée',
+  archivage: 'Archivage',
+  restauration: 'Restauration',
+  suppression_definitive: 'Suppression définitive',
 };
 
 const COLUMNS = [
   { key: 'created_at', label: 'Date', isDateTime: true },
   { key: 'admin_email', label: 'Auteur' },
+  { key: 'details', label: 'Rôle', format: (v) => v?.role || '—' },
   { key: 'action', label: 'Action', format: (v) => ACTION_LABELS[v] || v },
   { key: 'details', label: 'Détail', format: (v) => v ? Object.entries(v).map(([k, val]) => `${k}: ${Array.isArray(val) ? val.join(', ') : val}`).join(' · ') : '—' },
 ];
